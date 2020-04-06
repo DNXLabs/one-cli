@@ -1,0 +1,7 @@
+python-dotenv
+PyInquirer
+pyinstaller
+click
+docker-py
+dockerpty
+pyyaml

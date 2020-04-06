@@ -1,0 +1,10 @@
+build
+dist
+one.spec
+one.egg-info
+__pycache__
+one.spec
+one/__init__.pyc
+one/__main__.pyc
+one/one.pyc
+env
