@@ -58,6 +58,8 @@ jobs:
       - name: Build Project
         run: |
           pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
+        env:
+          CLI_VERSION: ${{ github.ref }}
 
       - name: Load Release URL File from release job
         uses: actions/download-artifact@v1
