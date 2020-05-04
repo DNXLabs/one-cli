@@ -20,6 +20,7 @@ from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.commands.idp import idp
 
+
 @click.version_option(__version__)
 @click.group()
 def cli():
@@ -31,9 +32,6 @@ cli.add_command(login)
 cli.add_command(terraform)
 cli.add_command(workspace)
 cli.add_command(idp)
-
-
-Image().check()
 
 
 if __name__ == "__main__":
