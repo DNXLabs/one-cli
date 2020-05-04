@@ -19,6 +19,7 @@ from one.commands.login import login
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.commands.idp import idp
+from one.commands.update import update
 
 
 @click.version_option(__version__)
@@ -32,6 +33,7 @@ cli.add_command(login)
 cli.add_command(terraform)
 cli.add_command(workspace)
 cli.add_command(idp)
+cli.add_command(update)
 
 
 if __name__ == "__main__":
