@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import setuptools
+from one.__init__ import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name                          = 'one',
-    version                       = '0.0.1',
+    version                       = __version__,
     py_modules                    = ['one'],
     include_package_data          = True,
     description                   = 'Python CLI to manage stacks from DNX.',
