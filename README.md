@@ -55,15 +55,15 @@ images:
     gsuite: dnxsolutions/aws-google-auth:latest
     azure: dnxsolutions/docker-aws-azure-ad:latest
 workspaces:
-    - bubbletea-mgmt-admin:
+    - mgmt:
         aws-account-id:
         aws-role:
         workspace:
-    - bubbletea-nonprod-admin:
+    - nonprod:
         aws-account-id:
         aws-role:
         workspace:
-    - bubbletea-prod-admin:
+    - prod:
         aws-account-id:
         aws-role:
         workspace:
