@@ -49,6 +49,7 @@ Commands:
 ```
 
 ## Configuration Example
+one.yaml
 ```yaml
 images:
     terraform: dnxsolutions/terraform:0.12.20-dnx1

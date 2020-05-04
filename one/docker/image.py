@@ -22,8 +22,8 @@ class Image:
                    'azure': AZURE_AUTH_IMAGE }
 
         temp_images = {}
-        if path.exists('./config.yaml'):
-            with open('./config.yaml') as file:
+        if path.exists('./one.yaml'):
+            with open('./one.yaml') as file:
                 docs = yaml.load(file, Loader=yaml.FullLoader)
                 temp_images = docs['images']
             file.close()
