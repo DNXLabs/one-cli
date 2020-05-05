@@ -10,7 +10,7 @@ from one.utils.environment import Environment, home, load_environments
 from one.__init__ import __version__
 
 if not path.exists(home + '/.one'):
-	os.mkdir(home + '/.one')
+    os.mkdir(home + '/.one')
 
 load_environments()
 
@@ -25,8 +25,8 @@ from one.commands.update import update
 @click.version_option(__version__)
 @click.group()
 def cli():
-	"""CLI to manage all stacks from DNX."""
-	pass
+    """CLI to manage all stacks from DNX."""
+    pass
 
 
 cli.add_command(login)
@@ -37,4 +37,4 @@ cli.add_command(update)
 
 
 if __name__ == "__main__":
-	cli()
+    cli()
