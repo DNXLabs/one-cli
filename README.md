@@ -56,18 +56,15 @@ images:
     gsuite: dnxsolutions/aws-google-auth:latest
     azure: dnxsolutions/docker-aws-azure-ad:latest
 workspaces:
-    - mgmt:
+    mgmt:
         aws-account-id:
         aws-role:
-        workspace:
-    - nonprod:
+    nonprod:
         aws-account-id:
         aws-role:
-        workspace:
-    - prod:
+    prod:
         aws-account-id:
         aws-role:
-        workspace:
 ```
 
 ## Setup

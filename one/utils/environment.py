@@ -45,7 +45,7 @@ class Environment:
             env_workspace = {}
             env_workspace['TF_VAR_aws_account_id'] = get_workspace_value(workspace, 'aws-account-id')
             env_workspace['TF_VAR_aws_role'] = get_workspace_value(workspace, 'aws-role')
-            env_workspace['WORKSPACE'] = get_workspace_value(workspace, 'workspace')
+            env_workspace['WORKSPACE'] = workspace
         else:
             print('You do not have any workspace selected.')
             raise SystemExit
