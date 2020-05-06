@@ -65,6 +65,10 @@ workspaces:
     prod:
         aws-account-id:
         aws-role:
+    default:
+        aws-account-id:
+        aws-role:
+        aws-assume-role: true|false
 ```
 
 ## Setup

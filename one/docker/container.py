@@ -32,5 +32,12 @@ class Container:
                                                     }
                                                 }
                                             ))
-        dockerpty.start(client, container)
+
+        if tty:
+            dockerpty.start(client, container)
+
+        logs = client.logs(container['Id'])
+
         client.remove_container(container)
+
+        return logs
