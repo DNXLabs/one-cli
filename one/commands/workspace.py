@@ -2,7 +2,7 @@ import click
 from one.utils.environment import home
 from one.utils.prompt import style
 from PyInquirer import prompt
-from one.utils.workspace import get_workspaces
+from one.utils.config import get_workspaces
 from one.__init__ import CLI_ROOT
 
 

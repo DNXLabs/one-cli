@@ -2,7 +2,7 @@ import docker.utils
 import os
 from os import path
 from pathlib import Path
-from one.utils.workspace import get_workspace_value
+from one.utils.config import get_workspace_value
 from one.utils.parse_env import parse_env
 from dotenv import load_dotenv
 from one.docker.container import Container
