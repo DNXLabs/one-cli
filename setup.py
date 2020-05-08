@@ -13,7 +13,7 @@ setuptools.setup(
     include_package_data=True,
     description='Python CLI to manage stacks from DNX.',
     license='Apache 2.0',
-    url='https://github.com/DNXLabs/one',
+    url='https://github.com/DNXLabs/one-cli',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='DNX Solutions',
