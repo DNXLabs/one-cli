@@ -5,6 +5,7 @@ from os import path
 import click
 from one.utils.environment import home, load_environments
 from one.__init__ import __version__, CLI_ROOT
+from one.commands.app import app
 from one.commands.idp import idp
 from one.commands.init import init
 from one.commands.login import login
@@ -26,7 +27,7 @@ def cli():
     pass
 
 
-COMMAND_DIRS = [idp, init, login, terraform, workspace]
+COMMAND_DIRS = [app, idp, init, login, terraform, workspace]
 
 
 for command in COMMAND_DIRS:
