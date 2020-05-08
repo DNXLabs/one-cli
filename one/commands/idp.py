@@ -2,6 +2,7 @@ import click
 from one.utils.prompt import style
 from PyInquirer import prompt
 from one.utils.environment import home
+from one.__init__ import CLI_ROOT
 
 
 @click.group(help='Manage the IDP configuration in your local.')
@@ -76,6 +77,6 @@ def build_credential(key1, value1, key2, value2):
 
 
 def create_creadential(credential):
-    with open(home + '/.one/idp', 'w+') as f:
+    with open(home + CLI_ROOT + '/idp', 'w+') as f:
         f.write(credential)
         f.close()

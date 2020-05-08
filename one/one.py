@@ -7,10 +7,10 @@ import click
 from one.docker.image import Image
 from one.docker.container import Container
 from one.utils.environment import Environment, home, load_environments
-from one.__init__ import __version__
+from one.__init__ import __version__, CLI_ROOT
 
-if not path.exists(home + '/.one'):
-    os.mkdir(home + '/.one')
+if not path.exists(home + CLI_ROOT):
+    os.mkdir(home + CLI_ROOT)
 
 load_environments()
 

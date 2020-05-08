@@ -3,6 +3,7 @@ import shutil
 from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment import get_env_idp, home
+from one.__init__ import CLI_ROOT
 
 
 @click.group(help='Group of commands to login specifying one SSO provider.')
@@ -20,7 +21,7 @@ def gsuite():
     gsuite_auth_image = Image().get_image('gsuite')
     Container().create(image=gsuite_auth_image, command=None, environment=env_idp)
 
-    shutil.move('.env', home + '/.one/credentials')
+    shutil.move('.env', home + CLI_ROOT + '/credentials')
 
 
 @login.command(help='Login with Azure.')
@@ -33,4 +34,4 @@ def azure():
     azure_auth_image = Image().get_image('azure')
     Container().create(image=azure_auth_image, command=None, environment=env_idp)
 
-    shutil.move('.env', home + '/.one/credentials')
+    shutil.move('.env', home + CLI_ROOT + '/credentials')
