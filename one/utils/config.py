@@ -3,6 +3,24 @@ from os import path
 from one.__init__ import CONFIG_FILE
 
 
+def get_config_value(key, default=None):
+    if not path.exists('./one.yaml'):
+        print('No config file in current directory.')
+        raise SystemExit
+
+    value = default
+
+    with open('./one.yaml') as file:
+        docs = yaml.load(file, Loader=yaml.FullLoader)
+        for key_path in key.split('.'):
+            if not key_path in docs:
+                break
+            if isinstance(docs[key_path], str):
+                value = docs[key_path]
+            docs = docs[key_path]
+
+    return value
+
 def get_workspaces():
     workspaces = []
     if not path.exists(CONFIG_FILE):
