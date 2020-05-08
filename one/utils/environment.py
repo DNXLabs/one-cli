@@ -3,7 +3,10 @@ import os
 from os import path
 from pathlib import Path
 from one.utils.workspace import get_workspace_value
+from one.utils.parse_env import parse_env
 from dotenv import load_dotenv
+from one.docker.container import Container
+from one.docker.image import Image
 
 
 home = str(Path.home())
@@ -37,18 +40,47 @@ class Environment:
         if path.exists(home + '/.one/credentials'):
             env_credentials = docker.utils.parse_env_file(home + '/.one/credentials')
         else:
-            print('You are not logged in')
+            print('Please login before proceeding')
             raise SystemExit
 
-        if os.getenv("DEFAULT_WORKSPACE"):
-            workspace = os.getenv("DEFAULT_WORKSPACE")
-            env_workspace = {}
-            env_workspace['TF_VAR_aws_account_id'] = get_workspace_value(workspace, 'aws-account-id')
-            env_workspace['TF_VAR_aws_role'] = get_workspace_value(workspace, 'aws-role')
-            env_workspace['WORKSPACE'] = workspace
-        else:
-            print('You do not have any workspace selected.')
+        if not os.getenv("DEFAULT_WORKSPACE"):
+            print('Please select a workspace before proceeding')
             raise SystemExit
+
+        workspace = os.getenv("DEFAULT_WORKSPACE")
+        env_aws_account_id = get_workspace_value(workspace, 'aws-account-id')
+        env_aws_role = get_workspace_value(workspace, 'aws-role')
+        aws_assume_role = get_workspace_value(workspace, 'aws-assume-role', 'false')
+        
+        env_workspace = {}
+        env_workspace['TF_VAR_aws_account_id'] = env_aws_account_id
+        env_workspace['TF_VAR_aws_role'] = env_aws_role
+        env_workspace['WORKSPACE'] = workspace
+
+        if aws_assume_role.lower() == "true":
+            assume_creds = self.aws_assume_role(credentials=env_credentials, role=env_aws_role, account_id=env_aws_account_id)
+            env_credentials.update(assume_creds)
 
         envs = dict(env_credentials, **env_workspace)
         return envs
+
+    def aws_assume_role(self, credentials, role, account_id):
+        container = Container()
+        image = Image()
+
+        AWS_IMAGE = image.get_image('aws')
+        envs = { 
+            "AWS_ROLE": role,
+            "AWS_ACCOUNT_ID": account_id,
+        }
+        envs.update(credentials)
+
+        command = 'assume-role.sh'
+        output = container.create(
+            image=AWS_IMAGE, 
+            entrypoint='/bin/bash -c', 
+            command=command, 
+            environment=envs, 
+            tty=False, stdin_open=False)
+
+        return parse_env("\n".join(output.decode("utf-8").splitlines()))

@@ -32,5 +32,14 @@ class Container:
                                                     }
                                                 }
                                             ))
-        dockerpty.start(client, container)
+
+        if tty:
+            dockerpty.start(client, container)
+        else:
+            client.start(container=container.get('Id'))
+            client.wait(container=container.get('Id'))
+
+        logs = client.logs(container['Id'])
         client.remove_container(container)
+
+        return logs
