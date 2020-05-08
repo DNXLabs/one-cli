@@ -81,6 +81,6 @@ class Environment:
             entrypoint='/bin/bash -c', 
             command=command, 
             environment=envs, 
-            tty=True, stdin_open=False)
+            tty=False, stdin_open=False)
 
         return parse_env("\n".join(output.decode("utf-8").splitlines()))
