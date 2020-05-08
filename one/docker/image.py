@@ -48,6 +48,7 @@ class Image:
                     prefix = line['id']
                     suffix = line['status']
                     print_progress_bar(iteration=current,
-                                        total=total,
-                                        prefix=prefix,
-                                        suffix=suffix)
+                                       total=total,
+                                       prefix=prefix,
+                                       suffix=suffix,
+                                       fill='=')
