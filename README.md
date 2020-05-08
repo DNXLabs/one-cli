@@ -1,4 +1,4 @@
-# ONE
+# one-cli
 
 CLI to manage all stacks from DNX.
 
