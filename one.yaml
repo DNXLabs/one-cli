@@ -1,0 +1,11 @@
+images:
+  azure: dnxsolutions/docker-aws-azure-ad:latest
+  gsuite: dnxsolutions/aws-google-auth:latest
+  terraform: dnxsolutions/terraform:0.12.20-dnx1
+workspaces:
+  ASDF:
+    aws-account-id: ASDF
+    aws-role: ASDF
+  asd:
+    aws-account-id: asd
+    aws-role: asd
