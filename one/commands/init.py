@@ -5,12 +5,6 @@ from one.utils.prompt import style
 from one.docker.image import AZURE_AUTH_IMAGE, GSUITE_AUTH_IMAGE, TERRAFORM_IMAGE
 from one.__init__ import CONFIG_FILE
 
-images = {
-    'terraform': TERRAFORM_IMAGE,
-    'gsuite': GSUITE_AUTH_IMAGE,
-    'azure': AZURE_AUTH_IMAGE
-}
-
 creation_question =  [
     {
         'type': 'input',
@@ -18,6 +12,30 @@ creation_question =  [
         'message': 'Do you want to create workspaces now? [Y/n]',
         'default': 'Y'
     }
+]
+
+image_questions = [
+    {
+        'type': 'input',
+        'name': 'terraform',
+        'default': TERRAFORM_IMAGE,
+        'message': 'Terraform docker image:',
+        'validate': lambda text: len(text) >= 4 or 'Must be at least 4 character.'
+    },
+    {
+        'type': 'input',
+        'name': 'gsuite',
+        'default': GSUITE_AUTH_IMAGE,
+        'message': 'G Suite docker image:',
+        'validate': lambda text: len(text) >= 4 or 'Must be at least 4 character.'
+    },
+    {
+        'type': 'input',
+        'name': 'azure',
+        'default': AZURE_AUTH_IMAGE,
+        'message': 'Azure docker image:',
+        'validate': lambda text: len(text) >= 4 or 'Must be at least 4 character.'
+    },
 ]
 
 workspace_questions = [
@@ -59,6 +77,13 @@ def init():
     create_workspace = create_answer['create'].lower()
     workspaces = {}
     if create_workspace == 'y' or not create_workspace:
+        image_answers = prompt(image_questions, style=style)
+        images = {
+            'terraform': image_answers['terraform'],
+            'gsuite': image_answers['gsuite'],
+            'azure': image_answers['azure']
+        }
+
         while True:
             workspace_answers = prompt(workspace_questions, style=style)
             if workspace_answers['assume_role'].lower() == 'y' or not workspace_answers['assume_role']:
