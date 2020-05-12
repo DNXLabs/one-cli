@@ -15,7 +15,8 @@ creation_question =  [
     {
         'type': 'input',
         'name': 'create',
-        'message': 'Do you want to create workspaces now? [Y/n]'
+        'message': 'Do you want to create workspaces now? [Y/n]',
+        'default': 'Y'
     }
 ]
 
@@ -40,7 +41,14 @@ workspace_questions = [
     },
     {
         'type': 'input',
+        'name': 'assume_role',
+        'default': 'n',
+        'message': 'Do you want to this workspace to assume role? [Y/n]'
+    },
+    {
+        'type': 'input',
         'name': 'new_workspace',
+        'default': 'Y',
         'message': 'Do you want to create another workspace? [Y/n]'
     }
 ]
@@ -53,9 +61,14 @@ def init():
     if create_workspace == 'y' or not create_workspace:
         while True:
             workspace_answers = prompt(workspace_questions, style=style)
+            if workspace_answers['assume_role'].lower() == 'y' or not workspace_answers['assume_role']:
+                assume_role = True
+            else:
+                assume_role = False
             workspace = {
                             'aws-role': workspace_answers['AWS_ROLE'],
-                            'aws-account-id': workspace_answers['AWS_ACCOUNT_ID']
+                            'aws-account-id': workspace_answers['AWS_ACCOUNT_ID'],
+                            'assume-role': assume_role
                         }
             workspaces[workspace_answers['WORKSPACE']] = workspace
             if workspace_answers['new_workspace'].lower() == 'n':
