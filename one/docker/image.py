@@ -1,5 +1,6 @@
 from one.docker.client import client
 from one.utils.print_progress_bar import print_progress_bar
+from one.__init__ import CONFIG_FILE
 from os import path
 import json
 import yaml
@@ -24,8 +25,8 @@ class Image:
                    'aws': AWS_IMAGE }
 
         temp_images = {}
-        if path.exists('./one.yaml'):
-            with open('./one.yaml') as file:
+        if path.exists(CONFIG_FILE):
+            with open(CONFIG_FILE) as file:
                 docs = yaml.load(file, Loader=yaml.FullLoader)
                 temp_images = docs['images']
             file.close()

@@ -1,13 +1,14 @@
 import yaml
 from os import path
+from one.__init__ import CONFIG_FILE
 
 def get_workspaces():
     workspaces = []
-    if not path.exists('./one.yaml'):
+    if not path.exists(CONFIG_FILE):
         print('No config file in current directory.')
         raise SystemExit
 
-    with open('./one.yaml') as file:
+    with open(CONFIG_FILE) as file:
         docs = yaml.load(file, Loader=yaml.FullLoader)
         for workspace_key in docs['workspaces'].keys():
             workspaces.append(workspace_key)
@@ -17,11 +18,11 @@ def get_workspaces():
 
 
 def get_workspace_value(workspace_name, variable, default=None):
-    if not path.exists('./one.yaml'):
+    if not path.exists(CONFIG_FILE):
         print('No config file in current directory.')
         raise SystemExit
 
-    with open('./one.yaml') as file:
+    with open(CONFIG_FILE) as file:
         docs = yaml.load(file, Loader=yaml.FullLoader)
         if workspace_name not in docs['workspaces']:
             print('Workspace %s not found', workspace_name)
@@ -36,7 +37,6 @@ def get_workspace_value(workspace_name, variable, default=None):
             raise SystemExit
         else:
             value = default
-        
     file.close()
 
     return str(value)

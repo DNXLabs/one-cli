@@ -7,14 +7,15 @@ from one.utils.parse_env import parse_env
 from dotenv import load_dotenv
 from one.docker.container import Container
 from one.docker.image import Image
+from one.__init__ import CLI_ROOT
 
 
 home = str(Path.home())
 
 
 def get_env_idp():
-    if path.exists(home + '/.one/idp'):
-        env_idp = docker.utils.parse_env_file(home + '/.one/idp')
+    if path.exists(home + CLI_ROOT + '/idp'):
+        env_idp = docker.utils.parse_env_file(home + CLI_ROOT + '/idp')
         return env_idp
     else:
         print('You do not have any idp configured, first setup your idp.')
@@ -22,7 +23,7 @@ def get_env_idp():
 
 
 def load_environments():
-    env_path_workspace = home + '/.one/default'
+    env_path_workspace = home + CLI_ROOT + '/default'
     load_dotenv(dotenv_path=env_path_workspace)
 
 
@@ -37,8 +38,8 @@ class Environment:
         env_workspace = {}
         env_credentials = {}
 
-        if path.exists(home + '/.one/credentials'):
-            env_credentials = docker.utils.parse_env_file(home + '/.one/credentials')
+        if path.exists(home + CLI_ROOT + '/credentials'):
+            env_credentials = docker.utils.parse_env_file(home + CLI_ROOT + '/credentials')
         else:
             print('Please login before proceeding')
             raise SystemExit
