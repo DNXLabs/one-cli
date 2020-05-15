@@ -32,6 +32,11 @@ sudo mv ./one /usr/local/bin/one
 one --version
 ```
 
+5. Install shell completion
+```
+curl -sSL https://raw.githubusercontent.com/DNXLabs/one-cli/master/shell_completion.py | python3
+```
+
 ## Usage
 ```
 Usage: one [OPTIONS] COMMAND [ARGS]...
