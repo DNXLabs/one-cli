@@ -32,7 +32,8 @@ class Environment:
     def __init__(self):
         pass
 
-    def build(self, workspace):
+
+    def build(self, workspace=None):
         envs = {}
         env_workspace = {}
         env_credentials = {}
@@ -43,11 +44,11 @@ class Environment:
             print('Please login before proceeding')
             raise SystemExit
 
-        if not workspace:
-            if not os.getenv("DEFAULT_WORKSPACE"):
-                print('Please select a workspace before proceeding')
-                raise SystemExit
-            workspace = os.getenv("DEFAULT_WORKSPACE")
+        if not workspace and not os.getenv("DEFAULT_WORKSPACE"):
+            print('Please select a workspace before proceeding')
+            raise SystemExit
+
+        workspace = os.getenv("DEFAULT_WORKSPACE") or workspace
 
         env_aws_account_id = get_workspace_value(workspace, 'aws-account-id')
         env_aws_role = get_workspace_value(workspace, 'aws-role')
