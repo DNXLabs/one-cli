@@ -6,6 +6,8 @@ from one.docker.image import Image
 import os
 
 
+image = Image()
+
 class Container:
 
     def __init__(self):
@@ -13,9 +15,7 @@ class Container:
 
 
     def create(self, image='', command=None, entrypoint=None, stdin_open=True, tty=True, environment=''):
-        docker_image = client.images(name=image, all=True)
-        if not docker_image:
-            Image().pull(image)
+        image.check_image(image)
 
         container = client.create_container(image,
                                             command=command,
