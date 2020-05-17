@@ -16,8 +16,7 @@ class Container:
         if volume:
             host_config = client.create_host_config(binds={os.getcwd(): {
                                                     'bind': volume,
-                                                    'mode': 'rw'}})
-
+                                                    'mode': 'rw'}}
         container = client.create_container(image,
                                             command=command,
                                             entrypoint=entrypoint,
@@ -37,4 +36,4 @@ class Container:
         logs = client.logs(container['Id'])
         client.remove_container(container)
 
-        return logs
+        return logs.decode("utf-8")

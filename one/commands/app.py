@@ -1,8 +1,10 @@
 import click
 from one.docker.container import Container
 from one.docker.image import Image
+from one.docker.client import client as docker_client
 from one.utils.environment import Environment
 from one.utils.config import get_config_value, get_workspace_value
+from docker.errors import APIError
 import subprocess
 
 image = Image()
@@ -12,9 +14,11 @@ environment = Environment()
 ECS_DEPLOY_IMAGE = image.get_image('ecs-deploy')
 AWS_IMAGE = image.get_image('aws')
 
+
 @click.group(help='Group of app commands wrapped inside docker.')
 def app():
     pass
+
 
 @app.command(name='docker-build', help='Build docker image for deployment')
 @click.option('--build-version', default='latest', help='Build version, used as tag for docker image')
@@ -28,10 +32,34 @@ def docker_build(build_version):
     print(" ".join(command))
     subprocess.call(list(filter(None, command)))
 
+
 @app.command(name='docker-login', help='Login into docker registry')
 def docker_login():
-    ecr_aws_region = get_config_value('app.docker.ecr-aws-region')
-    ecr_aws_account_id = get_config_value('app.docker.aws-account-id')
+    envs = environment.build()
+
+    if get_config_value('app.docker.registry-type', 'ecr') == 'ecr': 
+        ecr_aws_region = get_config_value('app.docker.registry-options.ecr-aws-region')
+        ecr_aws_account_id = get_config_value('app.docker.registry-options.ecr-aws-account-id')
+        docker_get_login = container.create(
+            image=AWS_IMAGE, 
+            command="ecr get-login --no-include-email --registry-ids %s --region %s" % (ecr_aws_account_id, ecr_aws_region),
+            environment=envs,
+            tty=False)
+        docker_login_command_parts = docker_get_login.strip().split(' ')
+        docker_login_username = docker_login_command_parts[3]
+        docker_login_password = docker_login_command_parts[5]
+        docker_login_endpoint = docker_login_command_parts[6]
+
+        try:
+            output = docker_client.login(username=docker_login_username, password=docker_login_password, registry=docker_login_endpoint)
+        except APIError:
+            print('Error with docker login: ', docker_get_login.strip())
+            raise SystemExit
+
+        print('Login succeeded')
+    else:
+        print('Docker registry-type not implemented. Valid values: ecr')
+        raise SystemExit
 
 
 @app.command(name='deploy', help='Deploy application')

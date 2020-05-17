@@ -44,11 +44,11 @@ class Environment:
             print('Please login before proceeding')
             raise SystemExit
 
-        if not workspace and not os.getenv("DEFAULT_WORKSPACE"):
-            print('Please select a workspace before proceeding')
-            raise SystemExit
-
-        workspace = os.getenv("DEFAULT_WORKSPACE") or workspace
+        if not workspace:
+            if not os.getenv('DEFAULT_WORKSPACE'):
+                print('Please select a workspace before proceeding')
+                raise SystemExit
+            workspace = os.getenv('DEFAULT_WORKSPACE')
 
         env_aws_account_id = get_workspace_value(workspace, 'aws-account-id')
         env_aws_role = get_workspace_value(workspace, 'aws-role')
@@ -58,7 +58,7 @@ class Environment:
         env_workspace['TF_VAR_aws_role'] = env_aws_role
         env_workspace['WORKSPACE'] = workspace
 
-        if aws_assume_role.lower() == "true":
+        if aws_assume_role.lower() == 'true':
             assume_creds = self.aws_assume_role(credentials=env_credentials, role=env_aws_role, account_id=env_aws_account_id)
             env_credentials.update(assume_creds)
 
@@ -71,8 +71,8 @@ class Environment:
 
         AWS_IMAGE = image.get_image('aws')
         envs = {
-            "AWS_ROLE": role,
-            "AWS_ACCOUNT_ID": account_id,
+            'AWS_ROLE': role,
+            'AWS_ACCOUNT_ID': account_id,
         }
         envs.update(credentials)
 
@@ -85,4 +85,4 @@ class Environment:
             environment=envs,
             tty=False, stdin_open=False)
 
-        return parse_env("\n".join(output.decode("utf-8").splitlines()))
+        return parse_env('\n'.join(output.splitlines()))
