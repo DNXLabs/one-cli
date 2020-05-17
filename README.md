@@ -6,33 +6,18 @@ CLI to manage all stacks from DNX.
 [![LICENSE](https://img.shields.io/github/license/DNXLabs/one-cli)](https://github.com/DNXLabs/one-cli/blob/master/LICENSE)
 
 ## Quick start
-Use everything you need from DNX in 4 steps.
 
 1. Download the latest release with the command.
 ```
-# linux
-curl -L https://github.com/DNXLabs/one-cli/releases/latest/download/one_linux_amd64 -o one
-
-# macos
-curl -L https://github.com/DNXLabs/one-cli/releases/latest/download/one_macos_amd64 -o one
+curl -sSL https://raw.githubusercontent.com/DNXLabs/one-cli/master/get_one.sh | bash
 ```
 
-2. Make the one binary executable.
-```
-chmod +x ./one
-```
-
-3. Move the binary in to your PATH.
-```
-sudo mv ./one /usr/local/bin/one
-```
-
-4. Test to ensure the version you installed is up-to-date.
+2. Test to ensure the version you installed is up-to-date.
 ```
 one --version
 ```
 
-5. Install shell completion
+3. Install shell completion (Optional)
 ```
 curl -sSL https://raw.githubusercontent.com/DNXLabs/one-cli/master/shell_completion.py | python3
 ```
@@ -44,12 +29,14 @@ Usage: one [OPTIONS] COMMAND [ARGS]...
   CLI to manage all stacks from DNX.
 
 Options:
-  --help  Show this message and exit.
+  --version  Show the version and exit.
+  --help     Show this message and exit.
 
 Commands:
   idp        Manage the IDP configuration in your local.
   login      Group of commands to login specifying one SSO provider.
   terraform  Group of terraform commands wrapped inside docker.
+  update     Update CLI moving to latest stable version.
   workspace  Manage workspaces.
 ```
 
