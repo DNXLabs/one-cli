@@ -11,7 +11,7 @@ def get_config_value(key, default=None):
     value = default
 
     with open('./one.yaml') as file:
-        docs = yaml.load(file, Loader=yaml.FullLoader)
+        docs = yaml.load(file, Loader=yaml.BaseLoader)
         for key_path in key.split('.'):
             if not key_path in docs:
                 break
@@ -28,7 +28,7 @@ def get_workspaces():
         raise SystemExit
 
     with open(CONFIG_FILE) as file:
-        docs = yaml.load(file, Loader=yaml.FullLoader)
+        docs = yaml.load(file, Loader=yaml.BaseLoader)
         for workspace_key in docs['workspaces'].keys():
             workspaces.append(workspace_key)
     file.close()
@@ -42,7 +42,7 @@ def get_workspace_value(workspace_name, variable, default=None):
         raise SystemExit
 
     with open(CONFIG_FILE) as file:
-        docs = yaml.load(file, Loader=yaml.FullLoader)
+        docs = yaml.load(file, Loader=yaml.BaseLoader)
         if workspace_name not in docs['workspaces']:
             print('Workspace %s not found' % (workspace_name))
             raise SystemExit
