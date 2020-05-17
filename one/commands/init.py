@@ -2,82 +2,17 @@ import click
 from PyInquirer import prompt
 import yaml
 from one.utils.prompt import style
-from one.docker.image import AZURE_AUTH_IMAGE, GSUITE_AUTH_IMAGE, TERRAFORM_IMAGE
 from one.__init__ import CONFIG_FILE
+from one.prompt.init import CREATION_QUESTION, IMAGE_QUESTIONS, WORKSPACE_QUESTIONS
 
-creation_question =  [
-    {
-        'type': 'input',
-        'name': 'create',
-        'message': 'Do you want to create workspaces now? [Y/n]',
-        'default': 'Y'
-    }
-]
-
-image_questions = [
-    {
-        'type': 'input',
-        'name': 'terraform',
-        'default': TERRAFORM_IMAGE,
-        'message': 'Terraform docker image:',
-        'validate': lambda text: len(text) >= 4 or 'Must be at least 4 character.'
-    },
-    {
-        'type': 'input',
-        'name': 'gsuite',
-        'default': GSUITE_AUTH_IMAGE,
-        'message': 'G Suite docker image:',
-        'validate': lambda text: len(text) >= 4 or 'Must be at least 4 character.'
-    },
-    {
-        'type': 'input',
-        'name': 'azure',
-        'default': AZURE_AUTH_IMAGE,
-        'message': 'Azure docker image:',
-        'validate': lambda text: len(text) >= 4 or 'Must be at least 4 character.'
-    },
-]
-
-workspace_questions = [
-    {
-        'type': 'input',
-        'name': 'AWS_ACCOUNT_ID',
-        'message': 'What\'s your AWS_ACCOUNT_ID credential:',
-        'validate': lambda text: len(text) >= 1 or 'Must be at least 1 character.'
-    },
-    {
-        'type': 'input',
-        'name': 'AWS_ROLE',
-        'message': 'What\'s your AWS_ROLE credential:',
-        'validate': lambda text: len(text) >= 1 or 'Must be at least 1 character.'
-    },
-    {
-        'type': 'input',
-        'name': 'WORKSPACE',
-        'message': 'What\'s your WORKSPACE credential:',
-        'validate': lambda text: len(text) >= 1 or 'Must be at least 1 character.'
-    },
-    {
-        'type': 'input',
-        'name': 'assume_role',
-        'default': 'n',
-        'message': 'Do you want to this workspace to assume role? [Y/n]'
-    },
-    {
-        'type': 'input',
-        'name': 'new_workspace',
-        'default': 'Y',
-        'message': 'Do you want to create another workspace? [Y/n]'
-    }
-]
 
 @click.command(help='Create config file for CLI in current directory.')
 def init():
-    create_answer = prompt(creation_question, style=style)
+    create_answer = prompt(CREATION_QUESTION, style=style)
     create_workspace = create_answer['create'].lower()
     workspaces = {}
     if create_workspace == 'y' or not create_workspace:
-        image_answers = prompt(image_questions, style=style)
+        image_answers = prompt(IMAGE_QUESTIONS, style=style)
         images = {
             'terraform': image_answers['terraform'],
             'gsuite': image_answers['gsuite'],
@@ -85,7 +20,7 @@ def init():
         }
 
         while True:
-            workspace_answers = prompt(workspace_questions, style=style)
+            workspace_answers = prompt(WORKSPACE_QUESTIONS, style=style)
             if workspace_answers['assume_role'].lower() == 'y' or not workspace_answers['assume_role']:
                 assume_role = True
             else:
