@@ -52,7 +52,7 @@ class Environment:
         env_aws_account_id = get_workspace_value(workspace, 'aws-account-id')
         env_aws_role = get_workspace_value(workspace, 'aws-role')
         aws_assume_role = get_workspace_value(workspace, 'aws-assume-role', 'false')
-        
+
         env_workspace = {}
         env_workspace['TF_VAR_aws_account_id'] = env_aws_account_id
         env_workspace['TF_VAR_aws_role'] = env_aws_role
@@ -70,7 +70,7 @@ class Environment:
         image = Image()
 
         AWS_IMAGE = image.get_image('aws')
-        envs = { 
+        envs = {
             "AWS_ROLE": role,
             "AWS_ACCOUNT_ID": account_id,
         }
@@ -78,10 +78,11 @@ class Environment:
 
         command = 'assume-role.sh'
         output = container.create(
-            image=AWS_IMAGE, 
-            entrypoint='/bin/bash -c', 
-            command=command, 
-            environment=envs, 
+            image=AWS_IMAGE,
+            entrypoint='/bin/bash -c',
+            command=command,
+            volume='/work',
+            environment=envs,
             tty=False, stdin_open=False)
 
         return parse_env("\n".join(output.decode("utf-8").splitlines()))
