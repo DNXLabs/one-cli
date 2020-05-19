@@ -41,6 +41,12 @@ class Image:
         return images[key]
 
 
+    def check_image(self, image):
+        docker_image = client.images(name=image, all=True)
+        if not docker_image:
+            self.pull(image)
+
+
     def pull(self, image):
         for line in client.pull(image, stream=True, decode=True):
             if 'progressDetail' in line:

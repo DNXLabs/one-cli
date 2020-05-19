@@ -12,10 +12,18 @@ class Container:
         pass
 
 
-    def create(self, image='', command=None, entrypoint=None, stdin_open=True, tty=True, environment=''):
-        docker_image = client.images(name=image, all=True)
-        if not docker_image:
-            Image().pull(image)
+    def create(self, image='', command=None, entrypoint=None, volume=None, stdin_open=True, tty=True, environment=''):
+        Image().check_image(image)
+        host_config = None
+
+        if volume:
+            host_config = client.create_host_config(
+                            binds={ os.getcwd(): {
+                                'bind': volume,
+                                'mode': 'rw',
+                                }
+                            }
+                        )
 
         container = client.create_container(image,
                                             command=command,
@@ -23,15 +31,9 @@ class Container:
                                             stdin_open=stdin_open,
                                             tty=tty,
                                             environment=environment,
-                                            working_dir='/work',
-                                            volumes=['/work'],
-                                            host_config=client.create_host_config(
-                                                binds={ os.getcwd(): {
-                                                    'bind': '/work',
-                                                    'mode': 'rw',
-                                                    }
-                                                }
-                                            ))
+                                            working_dir=volume,
+                                            volumes=[volume],
+                                            host_config=host_config)
 
         if tty:
             dockerpty.start(client, container)
