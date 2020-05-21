@@ -1,7 +1,7 @@
 from one.docker.image import AZURE_AUTH_IMAGE, GSUITE_AUTH_IMAGE, TERRAFORM_IMAGE
 
 
-CREATION_QUESTION =  [
+CREATION_QUESTION = [
     {
         'type': 'input',
         'name': 'create',

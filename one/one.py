@@ -1,26 +1,22 @@
 #!/usr/bin/env python3
 
-import os, sys
+import os
 from os import path
-from pathlib import Path
 import click
-from one.docker.image import Image
-from one.docker.container import Container
-from one.utils.environment import Environment, home, load_environments
+from one.utils.environment import home, load_environments
 from one.__init__ import __version__, CLI_ROOT
-
-if not path.exists(home + CLI_ROOT):
-    os.mkdir(home + CLI_ROOT)
-
-load_environments()
-
-
 from one.commands.login import login
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.commands.idp import idp
 from one.commands.update import update
 from one.commands.init import init
+
+
+if not path.exists(home + CLI_ROOT):
+    os.mkdir(home + CLI_ROOT)
+
+load_environments()
 
 
 @click.version_option(__version__)
