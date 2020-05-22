@@ -1,6 +1,4 @@
 import dockerpty
-import docker.utils
-import time
 from one.docker.client import client
 from one.docker.image import Image
 import os
@@ -11,19 +9,14 @@ class Container:
     def __init__(self):
         pass
 
-
     def create(self, image='', command=None, entrypoint=None, volume=None, stdin_open=True, tty=True, environment=''):
         Image().check_image(image)
         host_config = None
 
         if volume:
-            host_config = client.create_host_config(
-                            binds={ os.getcwd(): {
-                                'bind': volume,
-                                'mode': 'rw',
-                                }
-                            }
-                        )
+            host_config = client.create_host_config(binds={os.getcwd(): {
+                                                    'bind': volume,
+                                                    'mode': 'rw'}})
 
         container = client.create_container(image,
                                             command=command,

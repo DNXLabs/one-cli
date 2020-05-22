@@ -1,4 +1,4 @@
-from PyInquirer import style_from_dict, Token, Separator
+from PyInquirer import style_from_dict, Token
 
 
 style = style_from_dict({

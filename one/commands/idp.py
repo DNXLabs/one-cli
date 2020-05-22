@@ -28,7 +28,10 @@ def config():
             answers = prompt(AZURE_QUESTIONS, style=style)
             if not bool(answers):
                 raise SystemExit
-            credential = build_credential('AZURE_TENANT_ID', answers['AZURE_TENANT_ID'], 'AZURE_APP_ID_URI', answers['AZURE_APP_ID_URI'])
+            credential = build_credential('AZURE_TENANT_ID',
+                                          answers['AZURE_TENANT_ID'],
+                                          'AZURE_APP_ID_URI',
+                                          answers['AZURE_APP_ID_URI'])
             create_creadential(credential)
         else:
             raise SystemExit

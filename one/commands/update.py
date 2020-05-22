@@ -22,8 +22,8 @@ def update():
     with open(file_name, "wb") as f:
         response = requests.get(url, stream=True)
         total_length = response.headers.get('content-length')
-        if total_length is None: # no content length header
-                f.write(response.content)
+        if total_length is None:  # no content length header
+            f.write(response.content)
         else:
             count = int(total_length)
             with click.progressbar(

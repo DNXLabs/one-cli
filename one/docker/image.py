@@ -2,7 +2,6 @@ from one.docker.client import client
 from one.utils.print_progress_bar import print_progress_bar
 from one.__init__ import CONFIG_FILE
 from os import path
-import json
 import yaml
 
 
@@ -17,12 +16,11 @@ class Image:
     def __init__(self):
         pass
 
-
     def get_images(self):
-        images = { 'terraform': TERRAFORM_IMAGE,
-                   'gsuite': GSUITE_AUTH_IMAGE,
-                   'azure': AZURE_AUTH_IMAGE,
-                   'aws': AWS_IMAGE }
+        images = {'terraform': TERRAFORM_IMAGE,
+                  'gsuite': GSUITE_AUTH_IMAGE,
+                  'azure': AZURE_AUTH_IMAGE,
+                  'aws': AWS_IMAGE}
 
         temp_images = {}
         if path.exists(CONFIG_FILE):
@@ -35,17 +33,14 @@ class Image:
                     images.update({key: value})
         return images
 
-
     def get_image(self, key):
         images = self.get_images()
         return images[key]
-
 
     def check_image(self, image):
         docker_image = client.images(name=image, all=True)
         if not docker_image:
             self.pull(image)
-
 
     def pull(self, image):
         for line in client.pull(image, stream=True, decode=True):

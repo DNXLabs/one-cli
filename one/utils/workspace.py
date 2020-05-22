@@ -2,6 +2,7 @@ import yaml
 from os import path
 from one.__init__ import CONFIG_FILE
 
+
 def get_workspaces():
     workspaces = []
     if not path.exists(CONFIG_FILE):
@@ -32,8 +33,8 @@ def get_workspace_value(workspace_name, variable, default=None):
 
         if variable in workspace:
             value = workspace[variable]
-        elif default == None:
-            print('Missing required parameter in config: workspaces.%s.%s' % (workspace_name,variable))
+        elif default is None:
+            print('Missing required parameter in config: workspaces.%s.%s' % (workspace_name, variable))
             raise SystemExit
         else:
             value = default
