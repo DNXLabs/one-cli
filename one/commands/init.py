@@ -25,9 +25,11 @@ def init():
                 assume_role = True
             else:
                 assume_role = False
-            workspace = {'aws-role': workspace_answers['AWS_ROLE'],
-                         'aws-account-id': workspace_answers['AWS_ACCOUNT_ID'],
-                         'assume-role': assume_role}
+            workspace = {
+                'aws-role': workspace_answers['AWS_ROLE'],
+                'aws-account-id': workspace_answers['AWS_ACCOUNT_ID'],
+                'assume-role': assume_role
+            }
             workspaces[workspace_answers['WORKSPACE']] = workspace
             if workspace_answers['new_workspace'].lower() == 'n':
                 break

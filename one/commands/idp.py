@@ -22,16 +22,23 @@ def config():
             answers = prompt(GSUITE_QUESTIONS, style=style)
             if not bool(answers):
                 raise SystemExit
-            credential = build_credential('GOOGLE_IDP_ID', answers['GOOGLE_IDP_ID'], 'GOOGLE_SP_ID', answers['GOOGLE_SP_ID'])
+            credential = build_credential(
+                'GOOGLE_IDP_ID',
+                answers['GOOGLE_IDP_ID'],
+                'GOOGLE_SP_ID',
+                answers['GOOGLE_SP_ID']
+            )
             create_creadential(credential)
         elif provider_answer['provider'] == 'Microsoft Azure':
             answers = prompt(AZURE_QUESTIONS, style=style)
             if not bool(answers):
                 raise SystemExit
-            credential = build_credential('AZURE_TENANT_ID',
-                                          answers['AZURE_TENANT_ID'],
-                                          'AZURE_APP_ID_URI',
-                                          answers['AZURE_APP_ID_URI'])
+            credential = build_credential(
+                'AZURE_TENANT_ID',
+                answers['AZURE_TENANT_ID'],
+                'AZURE_APP_ID_URI',
+                answers['AZURE_APP_ID_URI']
+            )
             create_creadential(credential)
         else:
             raise SystemExit
