@@ -4,19 +4,21 @@ from one.utils.prompt import style
 from PyInquirer import prompt
 from one.utils.workspace import get_workspaces
 from one.__init__ import CLI_ROOT
+from one.one import cli
 
+
+def __init__():
+    cli.add_command(workspace)
 
 @click.group(help='Manage workspaces.')
 def workspace():
     pass
-
 
 @workspace.command(name='list', help='List all workspaces.')
 def list_workspaces():
     workspaces = get_workspaces()
     for workspace in workspaces:
         print('- ' + workspace)
-
 
 @workspace.command(help='Change environment variables to another workspace.')
 def change():

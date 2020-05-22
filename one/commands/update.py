@@ -2,12 +2,16 @@ import click
 import requests
 from sys import platform
 from one.__init__ import __version__
+from one.one import cli
 
 
 BASE_RELEASE_URL = 'https://github.com/DNXLabs/one-cli/releases/latest/download/'
 url_linux_amd64 = BASE_RELEASE_URL + 'one_linux_amd64'
 url_macos_amd64 = BASE_RELEASE_URL + 'one_macos_amd64'
 
+
+def __init__():
+    cli.add_command(update)
 
 @click.command(help='Update CLI moving to latest stable version.')
 def update():

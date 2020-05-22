@@ -4,12 +4,15 @@ from PyInquirer import prompt
 from one.utils.environment import home
 from one.__init__ import CLI_ROOT
 from one.prompt.idp import PROVIDER_QUESTIONS, GSUITE_QUESTIONS, AZURE_QUESTIONS
+from one.one import cli
 
+
+def __init__():
+    cli.add_command(idp)
 
 @click.group(help='Manage the IDP configuration in your local.')
 def idp():
     pass
-
 
 @idp.command(help='Set IDP to be used.')
 def config():
@@ -43,10 +46,8 @@ def config():
         else:
             raise SystemExit
 
-
 def build_credential(key1, value1, key2, value2):
     return '%s=%s\n%s=%s\n' % (key1, value1, key2, value2)
-
 
 def create_creadential(credential):
     with open(home + CLI_ROOT + '/idp', 'w+') as f:
