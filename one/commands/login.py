@@ -8,12 +8,10 @@ from one.__init__ import CLI_ROOT
 container = Container()
 
 
-def __init__():
-    cli.add_command(login)
-
-@click.group(name='login', help='Group of commands to login specifying one SSO provider.')
+@click.group(help='Group of commands to login specifying one SSO provider.')
 def login():
     pass
+
 
 @login.command(help='Login with GSuite.')
 def gsuite():
@@ -26,6 +24,7 @@ def gsuite():
     container.create(image=gsuite_auth_image, command=None, volume='/work', environment=env_idp)
 
     shutil.move('.env', home + CLI_ROOT + '/credentials')
+
 
 @login.command(help='Login with Azure.')
 def azure():

@@ -11,6 +11,7 @@ from one.commands.login import login
 from one.commands.terraform import terraform
 from one.commands.update import update
 from one.commands.workspace import workspace
+from one.utils.load_plugins import load_plugins
 
 
 if not path.exists(home + CLI_ROOT):
@@ -31,6 +32,8 @@ COMMAND_DIRS = [idp, init, login, terraform, update, workspace]
 
 for command in COMMAND_DIRS:
     cli.add_command(command)
+
+load_plugins()
 
 
 if __name__ == "__main__":

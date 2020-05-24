@@ -4,11 +4,7 @@ import yaml
 from one.utils.prompt import style
 from one.__init__ import CONFIG_FILE
 from one.prompt.init import CREATION_QUESTION, IMAGE_QUESTIONS, WORKSPACE_QUESTIONS
-from one.one import cli
 
-
-def __init__():
-    cli.add_command(init)
 
 @click.command(help='Create config file for CLI in current directory.')
 def init():
