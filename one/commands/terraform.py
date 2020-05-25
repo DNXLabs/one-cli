@@ -6,7 +6,6 @@ from one.utils.environment import Environment
 image = Image()
 container = Container()
 environment = Environment()
-
 TERRAFORM_IMAGE = image.get_image('terraform')
 
 

@@ -5,7 +5,6 @@ from one.docker.image import Image
 from one.utils.environment import get_env_idp, home
 from one.__init__ import CLI_ROOT
 
-
 container = Container()
 
 
