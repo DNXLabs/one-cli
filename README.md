@@ -36,7 +36,6 @@ Commands:
   idp        Manage the IDP configuration in your local.
   login      Group of commands to login specifying one SSO provider.
   terraform  Group of terraform commands wrapped inside docker.
-  update     Update CLI moving to latest stable version.
   workspace  Manage workspaces.
 ```
 
