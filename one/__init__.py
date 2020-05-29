@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
 
-__version__ = os.getenv('CLI_VERSION', 'dev')
+__version__ = '0.3.2'
 
 CLI_ROOT = '/.one'
 CONFIG_FILE = './one.yaml'
