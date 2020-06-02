@@ -62,6 +62,14 @@ workspaces:
         aws-assume-role: true|false
 ```
 
+## Running with Docker
+```bash
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock \
+               -v $HOME/.one:/root/.one \
+               --entrypoint /bin/bash \
+               dnxsolutions/one-cli
+```
+
 ## Setup
 
 #### Dependencies

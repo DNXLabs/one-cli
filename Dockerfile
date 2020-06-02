@@ -2,15 +2,15 @@ FROM python:3
 
 RUN mkdir -p /usr/src/one
 
-WORKDIR /usr/src/one
+WORKDIR /root
 
-COPY requirements.txt .
+COPY requirements.txt /usr/src/one
 
-RUN pip install -r requirements.txt
+RUN pip install -r /usr/src/one/requirements.txt
 
-ADD . .
+ADD . /usr/src/one
 
-RUN pip install --editable .
+RUN pip install --editable /usr/src/one
 
 ENTRYPOINT [ "one" ]
 
