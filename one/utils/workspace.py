@@ -26,7 +26,7 @@ def get_workspace_value(workspace_name, variable, default=None):
     with open(CONFIG_FILE) as file:
         docs = yaml.load(file, Loader=yaml.FullLoader)
         if workspace_name not in docs['workspaces']:
-            print('Workspace %s not found', workspace_name)
+            print('Workspace %s not found' % (workspace_name))
             raise SystemExit
 
         workspace = docs['workspaces'][workspace_name]

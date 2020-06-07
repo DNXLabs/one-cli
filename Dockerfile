@@ -12,7 +12,8 @@ ADD . /usr/src/one
 
 RUN pip install --editable /usr/src/one
 
-RUN mkdir -p /root/.one/ && touch /root/.one/credentials
+RUN mkdir -p /root/.one/ && \
+    touch /root/.one/credentials
 
 ENTRYPOINT [ "one" ]
 
