@@ -1,7 +1,12 @@
 from one.utils.config import get_config_value
 import subprocess
 
+
 class App:
+    pass
+
+
+class AppRegistry:
     def __init__(self):
         self.name = get_config_value('app.name')
         self.image_name = get_config_value('app.docker.image-name', get_config_value('app.name'))

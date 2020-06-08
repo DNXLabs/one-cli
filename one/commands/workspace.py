@@ -1,9 +1,7 @@
 import click
-from one.utils.environment.common import home
 from one.utils.prompt import style
 from PyInquirer import prompt
 from one.utils.config import get_workspaces
-from one.__init__ import CLI_ROOT
 
 
 @click.group(help='Manage workspaces.')
@@ -36,6 +34,6 @@ def change():
 
     answers = prompt(questions, style=style)
 
-    f = open(home + CLI_ROOT + '/default', 'w')
-    f.write('DEFAULT_WORKSPACE=' + answers['workspace'] + '\n')
+    f = open('.one.workspace', 'w')
+    f.write('WORKSPACE=' + answers['workspace'] + '\n')
     f.close()
