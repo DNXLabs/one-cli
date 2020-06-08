@@ -1,7 +1,7 @@
 import click
 from one.utils.prompt import style
 from PyInquirer import prompt
-from one.utils.environment import home
+from one.utils.environment.common import home
 from one.__init__ import CLI_ROOT
 from one.prompt.idp import PROVIDER_QUESTIONS, GSUITE_QUESTIONS, AZURE_QUESTIONS
 

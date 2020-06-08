@@ -2,14 +2,14 @@ import click
 from one.docker.container import Container
 from one.docker.image import Image
 from one.docker.client import client as docker_client
-from one.utils.environment import Environment
+from one.utils.environment.aws import EnvironmentAws
 from one.utils.config import get_config_value, get_workspace_value
 from docker.errors import APIError
 from one.utils.app.common import app_factory
 
 image = Image()
 container = Container()
-environment = Environment()
+environment = EnvironmentAws()
 
 ECS_DEPLOY_IMAGE = image.get_image('ecs-deploy')
 AWS_IMAGE = image.get_image('aws')
@@ -26,11 +26,19 @@ def docker_build(build_version):
     App = app_factory(get_config_value('app.docker.registry-type', 'ecr'))
     App.docker_build(build_version)
 
+
 @app.command(name='docker-login', help='Login into docker registry')
 def docker_login():
-    envs = environment.build()
     App = app_factory(get_config_value('app.docker.registry-type', 'ecr'))
-    App.docker_login(envs)
+    environment.build()
+    App.docker_login(environment)
+
+
+@app.command(name='docker-push', help='Push image to docker registry')
+@click.option('--build-version', default='latest', help='Build version, used as tag for docker image')
+def docker_push(build_version):
+    App = app_factory(get_config_value('app.docker.registry-type', 'ecr'))
+    App.docker_push(build_version)
 
 
 @app.command(name='deploy', help='Deploy application')
@@ -47,7 +55,6 @@ def deploy(workspace, build_version,):
 
     ecr_aws_region = get_config_value('app.docker.ecr-aws-region')
     ecr_aws_account_id = get_config_value('app.docker.aws-account-id')
-    ecr_repository = get_config_value('app.docker.ecr-repository', get_config_value('app.name'))
     env_deploy['IMAGE_NAME'] = "%s.dkr.ecr.%s.amazonaws.com/%s" % (ecr_aws_account_id, ecr_aws_region, ecr_repository)
 
     timeout = get_workspace_value(workspace, 'deploy-timeout', 0)
