@@ -1,5 +1,4 @@
-from docker import Client
+import docker
 
 
-base_url = 'unix://var/run/docker.sock'
-client = Client(base_url=base_url)
+client = docker.from_env()
