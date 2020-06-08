@@ -2,8 +2,7 @@ import click
 import shutil
 from one.docker.container import Container
 from one.docker.image import Image
-from one.utils.environment.common import get_env_idp, home
-from one.__init__ import CLI_ROOT
+from one.utils.environment.common import get_env_idp, get_cli_root
 
 container = Container()
 
@@ -21,9 +20,9 @@ def gsuite():
 
     env_idp = get_env_idp()
     gsuite_auth_image = Image().get_image('gsuite')
-    container.create(image=gsuite_auth_image, command=None, volume='/work', environment=env_idp)
+    container.create(image=gsuite_auth_image, command=None, environment=env_idp)
 
-    shutil.move('.env', home + CLI_ROOT + '/credentials')
+    shutil.move('.env', get_cli_root() + '/credentials')
 
 
 @login.command(help='Login with Azure.')
@@ -34,6 +33,6 @@ def azure():
 
     env_idp = get_env_idp()
     azure_auth_image = Image().get_image('azure')
-    container.create(image=azure_auth_image, command=None, volume='/work', environment=env_idp)
+    container.create(image=azure_auth_image, command=None, environment=env_idp)
 
-    shutil.move('.env', home + CLI_ROOT + '/credentials')
+    shutil.move('.env', get_cli_root() + '/credentials')

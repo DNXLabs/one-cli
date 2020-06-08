@@ -18,7 +18,7 @@ def get_env_idp():
 
 
 def load_environments():
-    env_path_workspace = get_cli_root() + '/default'
+    env_path_workspace = '.one.workspace'
     load_dotenv(dotenv_path=env_path_workspace)
 
 

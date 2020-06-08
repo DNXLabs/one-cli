@@ -3,20 +3,19 @@
 import os
 from os import path
 import click
-from one.utils.environment.common import home, load_environments
-from one.__init__ import __version__, CLI_ROOT
+from one.utils.environment.common import load_environments, get_cli_root
+from one.__init__ import __version__
 from one.commands.app import app
 from one.commands.idp import idp
 from one.commands.init import init
 from one.commands.login import login
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
-from one.commands.app import app
 from one.utils.load_plugins import load_plugins
 
 
-if not path.exists(home + CLI_ROOT):
-    os.mkdir(home + CLI_ROOT)
+if not path.exists(get_cli_root()):
+    os.mkdir(get_cli_root())
 
 load_environments()
 
@@ -24,7 +23,7 @@ load_environments()
 @click.version_option(__version__)
 @click.group()
 def cli():
-    """CLI to manage all stacks from DNX. (build 0001)"""
+    """CLI to manage all stacks from DNX."""
     pass
 
 

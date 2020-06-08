@@ -6,7 +6,7 @@ from one.utils.parse_env import parse_env
 from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment import Environment
-from .common import *
+from .common import get_cli_root
 
 
 class EnvironmentAws(Environment):
@@ -23,12 +23,13 @@ class EnvironmentAws(Environment):
             print('Please login before proceeding')
             raise SystemExit
 
-
     def change_workspace(self, workspace, force=False):
-        if self.workspace == workspace and not force:
-            pass
+        if workspace is not None and self.workspace == workspace and not force:
+            return self
 
-        self.workspace = getenv("DEFAULT_WORKSPACE") or workspace
+        self.workspace = workspace or getenv("WORKSPACE")
+        print('Setting workspace to %s' % (self.workspace))
+
         aws_account_id = get_workspace_value(self.workspace, 'aws-account-id')
         aws_role = get_workspace_value(self.workspace, 'aws-role')
         aws_assume_role = get_workspace_value(self.workspace, 'aws-assume-role', 'false')
@@ -41,10 +42,11 @@ class EnvironmentAws(Environment):
 
         if aws_assume_role.lower() == "true":
             self.aws_assume_role(role=aws_role, account_id=aws_account_id)
-            
+
         return self
 
     def aws_assume_role(self, role, account_id):
+        print("Assuming role %s at %s" % (role, account_id))
         container = Container()
         image = Image()
 
@@ -60,13 +62,12 @@ class EnvironmentAws(Environment):
             image=AWS_IMAGE,
             entrypoint='/bin/bash -c',
             command=command,
-            volume='/work',
+            volumes=['.:/work'],
             environment=envs,
             tty=False, stdin_open=False)
 
         self.env_assume = parse_env("\n".join(output.splitlines()))
         return self.env_assume
-
 
     def get_env(self):
         return {**self.env_auth, **self.env_assume, **self.env_workspace}
