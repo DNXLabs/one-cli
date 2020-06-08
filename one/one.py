@@ -3,7 +3,7 @@
 import os
 from os import path
 import click
-from one.utils.environment import home, load_environments
+from one.utils.environment.common import home, load_environments
 from one.__init__ import __version__, CLI_ROOT
 from one.commands.app import app
 from one.commands.idp import idp

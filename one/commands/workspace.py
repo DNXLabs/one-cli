@@ -1,5 +1,5 @@
 import click
-from one.utils.environment import home
+from one.utils.environment.common import home
 from one.utils.prompt import style
 from PyInquirer import prompt
 from one.utils.config import get_workspaces

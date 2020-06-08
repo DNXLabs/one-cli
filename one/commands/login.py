@@ -2,7 +2,7 @@ import click
 import shutil
 from one.docker.container import Container
 from one.docker.image import Image
-from one.utils.environment import get_env_idp, home
+from one.utils.environment.common import get_env_idp, home
 from one.__init__ import CLI_ROOT
 
 container = Container()
