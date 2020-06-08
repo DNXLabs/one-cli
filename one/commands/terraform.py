@@ -90,3 +90,15 @@ def destroy(workspace):
         volume='/work',
         environment=envs
     )
+
+
+@terraform.command(help='Run terraform force-unlock inside the docker container.')
+@click.argument('lock_id')
+def force_unlock(lock_id):
+    envs = environment.build()
+    container.create(
+        image=TERRAFORM_IMAGE,
+        command='force-unlock',
+        volume='/work',
+        environment=envs
+    )
