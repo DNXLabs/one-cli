@@ -36,4 +36,4 @@ class Container:
         logs = client.logs(container['Id'])
         client.remove_container(container)
 
-        return logs.decode("utf-8")
+        return logs.decode('utf8')
