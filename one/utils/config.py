@@ -19,6 +19,10 @@ def get_config_value(key, default=None):
                 value = docs[key_path]
             docs = docs[key_path]
 
+    if value == None:
+        print('Required parameter: %s' % key)
+        raise SystemExit
+
     return value
 
 def get_workspaces():

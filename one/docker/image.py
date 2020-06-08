@@ -3,6 +3,7 @@ from one.utils.print_progress_bar import print_progress_bar
 from one.__init__ import CONFIG_FILE
 from os import path
 import yaml
+from requests.exceptions import ConnectionError
 
 
 GSUITE_AUTH_IMAGE = 'dnxsolutions/aws-google-auth:latest'
@@ -38,7 +39,12 @@ class Image:
         return images[key]
 
     def check_image(self, image):
-        docker_image = client.images(name=image, all=True)
+        try:
+            docker_image = client.images(name=image, all=True)
+        except ConnectionError:
+            print('Error: Make sure Docker is running (requests.exceptions.ConnectionError)')
+            raise SystemExit
+
         if not docker_image:
             self.pull(image)
 

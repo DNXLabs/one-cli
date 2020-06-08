@@ -11,6 +11,7 @@ from one.commands.init import init
 from one.commands.login import login
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
+from one.commands.app import app
 from one.utils.load_plugins import load_plugins
 
 
@@ -23,7 +24,7 @@ load_environments()
 @click.version_option(__version__)
 @click.group()
 def cli():
-    """CLI to manage all stacks from DNX."""
+    """CLI to manage all stacks from DNX. (build 0001)"""
     pass
 
 
