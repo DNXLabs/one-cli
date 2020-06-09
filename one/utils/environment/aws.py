@@ -17,13 +17,13 @@ class EnvironmentAws(Environment):
         self.env_workspace = {}
         self.workspace = ''
 
+    def build(self, workspace, force=False):
         if path.exists(get_cli_root() + '/credentials'):
             self.env_auth = docker.utils.parse_env_file(get_cli_root() + '/credentials')
         else:
             print('Please login before proceeding')
             raise SystemExit
 
-    def change_workspace(self, workspace, force=False):
         if workspace is not None and self.workspace == workspace and not force:
             return self
 

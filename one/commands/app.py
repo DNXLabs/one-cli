@@ -45,7 +45,7 @@ def deploy(workspace, build_version):
     app_deploy = app_deploy_factory(get_workspace_value(workspace, 'type', 'ecs'))
     app_registry = app_registry_factory(get_config_value('app.docker.registry-type', 'ecr'))
 
-    environment.change_workspace(workspace)
+    environment.build(workspace)
     image_name = app_registry.get_image_name(build_version)
 
     print('Deploying %s to %s' % (image_name, workspace))
