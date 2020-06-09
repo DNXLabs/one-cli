@@ -3,12 +3,14 @@ from one.utils.print_progress_bar import print_progress_bar
 from one.__init__ import CONFIG_FILE
 from os import path
 import yaml
+from requests.exceptions import ConnectionError
 
 
 GSUITE_AUTH_IMAGE = 'dnxsolutions/aws-google-auth:latest'
 AZURE_AUTH_IMAGE = 'dnxsolutions/docker-aws-azure-ad:latest'
 TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.12.20-dnx1'
 AWS_IMAGE = 'dnxsolutions/aws:1.18.44-dnx2'
+ECS_DEPLOY_IMAGE = 'dnxsolutions/ecs-deploy:1.2.0'
 
 
 class Image:
@@ -20,7 +22,8 @@ class Image:
         images = {'terraform': TERRAFORM_IMAGE,
                   'gsuite': GSUITE_AUTH_IMAGE,
                   'azure': AZURE_AUTH_IMAGE,
-                  'aws': AWS_IMAGE}
+                  'aws': AWS_IMAGE,
+                  'ecs-deploy': ECS_DEPLOY_IMAGE}
 
         temp_images = {}
         if path.exists(CONFIG_FILE):
@@ -38,7 +41,12 @@ class Image:
         return images[key]
 
     def check_image(self, image):
-        docker_image = client.images(name=image, all=True)
+        try:
+            docker_image = client.images(name=image, all=True)
+        except ConnectionError:
+            print('Error: Make sure Docker is running (requests.exceptions.ConnectionError)')
+            raise SystemExit
+
         if not docker_image:
             self.pull(image)
 

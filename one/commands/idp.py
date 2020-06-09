@@ -1,8 +1,7 @@
 import click
 from one.utils.prompt import style
 from PyInquirer import prompt
-from one.utils.environment import home
-from one.__init__ import CLI_ROOT
+from one.utils.environment.common import get_cli_root
 from one.prompt.idp import PROVIDER_QUESTIONS, GSUITE_QUESTIONS, AZURE_QUESTIONS
 
 
@@ -28,7 +27,7 @@ def config():
                 'GOOGLE_SP_ID',
                 answers['GOOGLE_SP_ID']
             )
-            create_creadential(credential)
+            create_credential(credential)
         elif provider_answer['provider'] == 'Microsoft Azure':
             answers = prompt(AZURE_QUESTIONS, style=style)
             if not bool(answers):
@@ -39,7 +38,7 @@ def config():
                 'AZURE_APP_ID_URI',
                 answers['AZURE_APP_ID_URI']
             )
-            create_creadential(credential)
+            create_credential(credential)
         else:
             raise SystemExit
 
@@ -48,7 +47,7 @@ def build_credential(key1, value1, key2, value2):
     return '%s=%s\n%s=%s\n' % (key1, value1, key2, value2)
 
 
-def create_creadential(credential):
-    with open(home + CLI_ROOT + '/idp', 'w+') as f:
+def create_credential(credential):
+    with open(get_cli_root() + '/idp', 'w+') as f:
         f.write(credential)
         f.close()

@@ -43,23 +43,47 @@ Commands:
 one.yaml
 ```yaml
 images:
-    terraform: dnxsolutions/terraform:0.12.20-dnx1
-    gsuite: dnxsolutions/aws-google-auth:latest
-    azure: dnxsolutions/docker-aws-azure-ad:latest
+  terraform: dnxsolutions/terraform:0.12.24-dnx1
+  gsuite: dnxsolutions/aws-google-auth:latest
+  azure: dnxsolutions/docker-aws-azure-ad:latest
+  aws: dnxsolutions/aws:1.18.44-dnx2
+  ecs-deploy: dnxsolutions/ecs-deploy:1.2.0
+
+app:
+  name: copacabana
+  port: 80
+  docker:
+    file: Dockerfile
+    image-name: copacabana
+    registry-type: ecr
+    registry-options:
+      ecr-aws-account-id: <redact>
+      ecr-aws-region: ap-southeast-2
+      ecr-aws-assume-role: true
+      ecr-aws-role: <redact>
+  ecs-task-definition-file: task-definition.tpl.json
+
 workspaces:
-    mgmt:
-        aws-account-id:
-        aws-role:
-    nonprod:
-        aws-account-id:
-        aws-role:
-    prod:
-        aws-account-id:
-        aws-role:
-    default:
-        aws-account-id:
-        aws-role:
-        aws-assume-role: true|false
+  mgmt-app:
+    type: ecs
+    aws-account-id: <redact>
+    aws-role: <redact>
+    aws-assume-role: true|false
+    aws-region: ap-southeast-2
+    ecs-cluster-name: cluster-01
+  mgmt:
+    aws-account-id:
+    aws-role:
+  nonprod:
+    aws-account-id:
+    aws-role:
+  prod:
+    aws-account-id:
+    aws-role:
+  default:
+    aws-account-id:
+    aws-role:
+    aws-assume-role: true|false
 ```
 
 ## Running with Docker

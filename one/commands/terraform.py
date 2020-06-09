@@ -1,11 +1,11 @@
 import click
 from one.docker.container import Container
 from one.docker.image import Image
-from one.utils.environment import Environment
+from one.utils.environment.aws import EnvironmentAws
 
 image = Image()
 container = Container()
-environment = Environment()
+environment = EnvironmentAws()
 TERRAFORM_IMAGE = image.get_image('terraform')
 
 
@@ -15,13 +15,14 @@ def terraform():
 
 
 @terraform.command(help='Run terraform init inside the docker container.')
-@click.option('-w', '--workspace', default=None, type=str)
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
 def init(workspace):
-    envs = environment.build(workspace)
+    envs = environment.build(workspace).get_env()
+
     container.create(
         image=TERRAFORM_IMAGE,
         command='init',
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
@@ -29,7 +30,7 @@ def init(workspace):
     container.create(
         image=TERRAFORM_IMAGE,
         command=command_create_workspace,
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
@@ -37,57 +38,57 @@ def init(workspace):
     container.create(
         image=TERRAFORM_IMAGE,
         command=command_select_workspace,
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
 
 @terraform.command(help='Run terraform plan inside the docker container.')
-@click.option('-w', '--workspace', default=None, type=str)
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
 def plan(workspace):
-    envs = environment.build(workspace)
+    envs = environment.build(workspace).get_env()
     command = 'plan -out=.terraform-plan-' + envs['WORKSPACE']
     container.create(
         image=TERRAFORM_IMAGE,
         command=command,
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
 
 @terraform.command(help='Run terraform apply inside the docker container.')
-@click.option('-w', '--workspace', default=None, type=str)
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
 def apply(workspace):
-    envs = environment.build(workspace)
+    envs = environment.build(workspace).get_env()
     command = 'terraform apply .terraform-plan-' + envs['WORKSPACE']
     container.create(
         image=TERRAFORM_IMAGE,
         command=command,
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
 
 @terraform.command(help='Run shell and get inside the container with interactive mode.')
-@click.option('-w', '--workspace', default=None, type=str)
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
 def shell(workspace):
-    envs = environment.build(workspace)
+    envs = environment.build(workspace).get_env()
     container.create(
         image=TERRAFORM_IMAGE,
         entrypoint='/bin/bash',
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
 
 @terraform.command(help='Run terraform destroy inside the docker container.')
-@click.option('-w', '--workspace', default=None, type=str)
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
 def destroy(workspace):
-    envs = environment.build(workspace)
+    envs = environment.build(workspace).get_env()
     container.create(
         image=TERRAFORM_IMAGE,
         command='destroy',
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
 
@@ -95,10 +96,10 @@ def destroy(workspace):
 @terraform.command(help='Run terraform force-unlock inside the docker container.')
 @click.argument('lock_id')
 def force_unlock(lock_id):
-    envs = environment.build()
+    envs = environment.build().get_env()
     container.create(
         image=TERRAFORM_IMAGE,
         command='force-unlock',
-        volume='/work',
+        volumes=['.:/work'],
         environment=envs
     )
