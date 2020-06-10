@@ -16,8 +16,9 @@ def terraform():
 
 @terraform.command(help='Run terraform init inside the docker container.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
-def init(workspace):
-    envs = environment.build(workspace).get_env()
+@click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
+def init(workspace, aws_role):
+    envs = environment.build(workspace, aws_role).get_env()
 
     container.create(
         image=TERRAFORM_IMAGE,
@@ -45,8 +46,9 @@ def init(workspace):
 
 @terraform.command(help='Run terraform plan inside the docker container.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
-def plan(workspace):
-    envs = environment.build(workspace).get_env()
+@click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
+def plan(workspace, aws_role):
+    envs = environment.build(workspace, aws_role).get_env()
     command = 'plan -out=.terraform-plan-' + envs['WORKSPACE']
     container.create(
         image=TERRAFORM_IMAGE,
@@ -58,8 +60,9 @@ def plan(workspace):
 
 @terraform.command(help='Run terraform apply inside the docker container.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
-def apply(workspace):
-    envs = environment.build(workspace).get_env()
+@click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
+def apply(workspace, aws_role):
+    envs = environment.build(workspace, aws_role).get_env()
     command = 'terraform apply .terraform-plan-' + envs['WORKSPACE']
     container.create(
         image=TERRAFORM_IMAGE,
@@ -71,8 +74,9 @@ def apply(workspace):
 
 @terraform.command(help='Run shell and get inside the container with interactive mode.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
-def shell(workspace):
-    envs = environment.build(workspace).get_env()
+@click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
+def shell(workspace, aws_role):
+    envs = environment.build(workspace, aws_role).get_env()
     container.create(
         image=TERRAFORM_IMAGE,
         entrypoint='/bin/bash',
@@ -83,8 +87,9 @@ def shell(workspace):
 
 @terraform.command(help='Run terraform destroy inside the docker container.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
-def destroy(workspace):
-    envs = environment.build(workspace).get_env()
+@click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
+def destroy(workspace, aws_role):
+    envs = environment.build(workspace, aws_role).get_env()
     container.create(
         image=TERRAFORM_IMAGE,
         command='destroy',

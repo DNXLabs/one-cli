@@ -17,7 +17,7 @@ class EnvironmentAws(Environment):
         self.env_workspace = {}
         self.workspace = ''
 
-    def build(self, workspace, force=False):
+    def build(self, workspace, aws_role, force=False):
         if path.exists(get_cli_root() + '/credentials'):
             self.env_auth = docker.utils.parse_env_file(get_cli_root() + '/credentials')
         else:
@@ -30,8 +30,8 @@ class EnvironmentAws(Environment):
         self.workspace = workspace or getenv('WORKSPACE')
         print('Setting workspace to %s' % (self.workspace))
 
-        aws_account_id = getenv('AWS_ACCOUNT_ID') or get_workspace_value(self.workspace, 'aws-account-id')
-        aws_role = getenv('AWS_ROLE') or get_workspace_value(self.workspace, 'aws-role')
+        aws_account_id = get_workspace_value(self.workspace, 'aws-account-id')
+        aws_role = aws_role or get_workspace_value(self.workspace, 'aws-role')
         aws_assume_role = get_workspace_value(self.workspace, 'aws-assume-role', 'false')
 
         self.env_workspace = {
