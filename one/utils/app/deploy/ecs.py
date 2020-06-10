@@ -1,8 +1,9 @@
+import click
+import os
 from one.utils.config import get_config_value, get_workspace_value
 from one.docker.container import Container
 from one.docker.image import Image
-import os
-from .. import App
+from one.utils.app import App
 
 ECS_DEPLOY_IMAGE = Image().get_image('ecs-deploy')
 container = Container()
@@ -23,7 +24,7 @@ class AppDeployEcs(App):
 
         ecs_task_definition_file = get_config_value('app.ecs-task-definition-file', 'task-definition.tpl.json')
         if not os.path.isfile(ecs_task_definition_file):
-            print('ECS task definition file not found (%s)' % ecs_task_definition_file)
+            click.echo('ECS task definition file not found (%s)' % ecs_task_definition_file)
             raise SystemExit
 
         envs = environment.get_env()

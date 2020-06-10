@@ -1,5 +1,6 @@
-from one.utils.config import get_config_value
+import click
 import subprocess
+from one.utils.config import get_config_value
 
 
 class App:
@@ -18,10 +19,10 @@ class AppRegistry:
 
     def docker_build_raw(self, image):
         command = ['docker', 'build', '-t', image, '-f', self.dockerfile] + self.build_cmd_args.split(' ') + ['.']
-        print(" ".join(command))
+        click.echo(" ".join(command))
         subprocess.call(list(filter(None, command)))
 
     def docker_push_raw(self, image):
         command = ['docker', 'push', image]
-        print(" ".join(command))
+        click.echo(" ".join(command))
         subprocess.call(list(filter(None, command)))

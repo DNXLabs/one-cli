@@ -1,7 +1,8 @@
+import click
+import docker.utils
 from pathlib import Path
 from dotenv import load_dotenv
 from os import path
-import docker.utils
 from one.__init__ import CLI_ROOT
 
 
@@ -13,7 +14,7 @@ def get_env_idp():
         env_idp = docker.utils.parse_env_file(get_cli_root() + '/idp')
         return env_idp
     else:
-        print('You do not have any idp configured, first setup your idp.')
+        click.echo('You do not have any idp configured, first setup your idp.')
         raise SystemExit
 
 

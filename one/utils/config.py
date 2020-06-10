@@ -1,3 +1,4 @@
+import click
 import yaml
 from os import path
 from one.__init__ import CONFIG_FILE
@@ -5,7 +6,7 @@ from one.__init__ import CONFIG_FILE
 
 def get_config_value(key, default=None):
     if not path.exists('./one.yaml'):
-        print('No config file in current directory.')
+        click.echo('No config file in current directory.')
         raise SystemExit
 
     value = default
@@ -20,7 +21,7 @@ def get_config_value(key, default=None):
             docs = docs[key_path]
 
     if value is None:
-        print('Required parameter: %s' % key)
+        click.echo('Required parameter: %s' % key)
         raise SystemExit
 
     return value
@@ -29,7 +30,7 @@ def get_config_value(key, default=None):
 def get_workspaces():
     workspaces = []
     if not path.exists(CONFIG_FILE):
-        print('No config file in current directory.')
+        click.echo('No config file in current directory.')
         raise SystemExit
 
     with open(CONFIG_FILE) as file:
@@ -43,16 +44,16 @@ def get_workspaces():
 
 def get_workspace_value(workspace_name, variable, default=None):
     if not path.exists(CONFIG_FILE):
-        print('No config file in current directory.')
+        click.echo('No config file in current directory.')
         raise SystemExit
 
     with open(CONFIG_FILE) as file:
         docs = yaml.load(file, Loader=yaml.BaseLoader)
         if workspace_name not in docs['workspaces']:
             if workspace_name is None:
-                print('Please set workspace before continuing')
+                click.echo('Please set workspace before continuing')
             else:
-                print('Workspace %s not found' % (workspace_name))
+                click.echo('Workspace %s not found' % (workspace_name))
             raise SystemExit
 
         workspace = docs['workspaces'][workspace_name]
@@ -60,7 +61,7 @@ def get_workspace_value(workspace_name, variable, default=None):
         if variable in workspace:
             value = workspace[variable]
         elif default is None:
-            print('Missing required parameter in config: workspaces.%s.%s' % (workspace_name, variable))
+            click.echo('Missing required parameter in config: workspaces.%s.%s' % (workspace_name, variable))
             raise SystemExit
         else:
             value = default

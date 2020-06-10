@@ -13,7 +13,7 @@ def workspace():
 def list_workspaces():
     workspaces = get_workspaces()
     for workspace in workspaces:
-        print('- ' + workspace)
+        click.echo('- ' + workspace)
 
 
 @workspace.command(help='Change environment variables to another workspace.')
