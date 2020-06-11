@@ -22,6 +22,20 @@ one --version
 curl -sSL https://raw.githubusercontent.com/DNXLabs/one-cli/master/shell_completion.py | python3
 ```
 
+## Running with Docker
+To easy start with docker just add this line to your `bash profile`.
+```bash
+alias one='docker run -it -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root -v $HOME/.one:/root/.one dnxsolutions/one-cli'
+```
+
+Or if you want to run the script by yourself, here we have one example:
+```bash
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock \
+               -v $HOME/.one:/root/.one \
+               --entrypoint /bin/bash \
+               dnxsolutions/one-cli
+```
+
 ## Usage
 ```
 Usage: one [OPTIONS] COMMAND [ARGS]...
@@ -84,14 +98,6 @@ workspaces:
     aws-account-id:
     aws-role:
     aws-assume-role: true|false
-```
-
-## Running with Docker
-```bash
-docker run -it -v /var/run/docker.sock:/var/run/docker.sock \
-               -v $HOME/.one:/root/.one \
-               --entrypoint /bin/bash \
-               dnxsolutions/one-cli
 ```
 
 ## Setup
