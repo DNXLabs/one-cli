@@ -15,7 +15,7 @@ def load_plugins(source=home+'/.one/plugins/'):
         if device_directories and path.exists(source + '__init__.py'):
             device_directories.remove(source + '__init__.py')
             for directory in device_directories:
-                command_path = directory.strip('./')[:-3].replace('/', '.').split('.', 4)[-1]
+                command_path = '.'.join(directory.rsplit('/', 2)[1:])[:-3]
                 mod = importlib.import_module(command_path)
                 __init__ = getattr(mod, '__init__')
                 __init__()

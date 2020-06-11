@@ -11,7 +11,7 @@ from one.commands.init import init
 from one.commands.login import login
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
-from one.utils.load_plugins import load_plugins
+from one.utils.plugins import load_plugins
 
 
 if not path.exists(get_cli_root()):
