@@ -16,7 +16,6 @@ def config():
     if not bool(provider_answer):
         raise SystemExit
     else:
-        print()
         if provider_answer['provider'] == 'Google G Suite':
             answers = prompt(GSUITE_QUESTIONS, style=style)
             if not bool(answers):

@@ -1,12 +1,12 @@
+import click
 import docker.utils
 from os import path, getenv
-
 from one.utils.config import get_workspace_value
 from one.utils.parse_env import parse_env
 from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment import Environment
-from .common import get_cli_root
+from one.utils.environment.common import get_cli_root
 
 
 class EnvironmentAws(Environment):
@@ -21,14 +21,14 @@ class EnvironmentAws(Environment):
         if path.exists(get_cli_root() + '/credentials'):
             self.env_auth = docker.utils.parse_env_file(get_cli_root() + '/credentials')
         else:
-            print('Please login before proceeding')
+            click.echo('Please login before proceeding')
             raise SystemExit
 
         if workspace is not None and self.workspace == workspace and not force:
             return self
 
         self.workspace = workspace or getenv('WORKSPACE')
-        print('Setting workspace to %s' % (self.workspace))
+        click.echo('Setting workspace to %s' % (self.workspace))
 
         aws_account_id = get_workspace_value(self.workspace, 'aws-account-id')
         aws_role = aws_role or get_workspace_value(self.workspace, 'aws-role')
@@ -46,7 +46,7 @@ class EnvironmentAws(Environment):
         return self
 
     def aws_assume_role(self, role, account_id):
-        print('Assuming role %s at %s' % (role, account_id))
+        click.echo('Assuming role %s at %s' % (role, account_id))
         container = Container()
         image = Image()
 

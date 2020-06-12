@@ -1,8 +1,9 @@
+import click
+import subprocess
 from one.utils.config import get_config_value
 from one.docker.image import Image
 from one.docker.container import Container
-import subprocess
-from .. import AppRegistry
+from one.utils.app import AppRegistry
 
 AWS_IMAGE = Image().get_image('aws')
 container = Container()
@@ -44,10 +45,10 @@ class AppRegistryEcr(AppRegistry):
         #     output = docker_client.login(username=docker_login_username,
         # password=docker_login_password, registry=docker_login_endpoint)
         # except APIError:
-        #     print('Error with docker login: ', docker_get_login.strip())
+        #     click.echo('Error with docker login: ', docker_get_login.strip())
         #     raise SystemExit
 
-        print("Docker login succeeded: %s.dkr.ecr.%s.amazonaws.com" % (self.ecr_aws_account_id, self.ecr_aws_region))
+        click.echo("Docker login succeeded: %s.dkr.ecr.%s.amazonaws.com" % (self.ecr_aws_account_id, self.ecr_aws_region))
 
     def docker_build(self, build_version):
         image = self.get_image_name(build_version)

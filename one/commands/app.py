@@ -48,6 +48,6 @@ def deploy(workspace, build_version):
     environment.build(workspace)
     image_name = app_registry.get_image_name(build_version)
 
-    print('Deploying %s to %s' % (image_name, workspace))
+    click.echo('Deploying %s to %s' % (image_name, workspace))
 
     app_deploy.deploy(environment, workspace, image_name)

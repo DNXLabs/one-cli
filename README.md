@@ -166,7 +166,7 @@ def __init__():
 
 @click.command(name='my_plugin', help='My plugin command')
 def my_plugin():
-    print('It works!')
+    click.echo('It works!')
 ```
 
 #### Running

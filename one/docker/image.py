@@ -1,8 +1,9 @@
+import click
+import yaml
 from one.docker.client import client
 from one.utils.print_progress_bar import print_progress_bar
 from one.__init__ import CONFIG_FILE
 from os import path
-import yaml
 from requests.exceptions import ConnectionError
 
 
@@ -44,7 +45,7 @@ class Image:
         try:
             docker_image = client.images(name=image, all=True)
         except ConnectionError:
-            print('Error: Make sure Docker is running (requests.exceptions.ConnectionError)')
+            click.echo('Error: Make sure Docker is running (requests.exceptions.ConnectionError)')
             raise SystemExit
 
         if not docker_image:
