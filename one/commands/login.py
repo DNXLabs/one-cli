@@ -12,9 +12,9 @@ image = Image()
 
 @click.command(help='Login using your configured SSO provider.')
 def login(auth_image=None):
-    f = open('.env', 'w')
-    f.write('NONE=')
-    f.close()
+    with open(CLI_ROOT + '/.env', 'w') as file:
+        file.write('NONE=')
+        file.close()
 
     env_idp = get_env_idp()
 
@@ -26,10 +26,11 @@ def login(auth_image=None):
         os.remove(CLI_ROOT + '/idp')
         raise SystemExit
 
+    credentials_volume = CLI_ROOT + ':/work'
     container.create(
         image=auth_image,
-        volumes=['.:/work'],
+        volumes=[credentials_volume],
         environment=env_idp
     )
 
-    shutil.move('.env', CLI_ROOT + '/credentials')
+    shutil.move(CLI_ROOT + '/.env', CLI_ROOT + '/credentials')
