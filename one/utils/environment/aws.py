@@ -6,7 +6,7 @@ from one.utils.parse_env import parse_env
 from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment import Environment
-from one.utils.environment.common import get_cli_root
+from one.__init__ import CLI_ROOT
 
 
 class EnvironmentAws(Environment):
@@ -18,8 +18,8 @@ class EnvironmentAws(Environment):
         self.workspace = ''
 
     def build(self, workspace, aws_role, force=False):
-        if path.exists(get_cli_root() + '/credentials'):
-            self.env_auth = docker.utils.parse_env_file(get_cli_root() + '/credentials')
+        if path.exists(CLI_ROOT + '/credentials'):
+            self.env_auth = docker.utils.parse_env_file(CLI_ROOT + '/credentials')
         else:
             click.echo('Please login before proceeding')
             raise SystemExit
