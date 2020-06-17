@@ -1,5 +1,6 @@
 import click
 import shutil
+import os
 from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment.idp import get_env_idp
@@ -17,11 +18,13 @@ def login(auth_image=None):
 
     env_idp = get_env_idp()
 
-    if 'IDP_TYPE' in env_idp:
-        click.echo('Login with %s.\n' % (env_idp['IDP_TYPE']))
-        auth_image = image.get_image(env_idp['IDP_TYPE'])
+    if 'SSO' in env_idp:
+        click.echo('Login with %s.\n' % (env_idp['SSO']))
+        auth_image = image.get_image(env_idp['SSO'])
     else:
-        click.echo('Invalid SSO configuration.')
+        click.echo('Invalid SSO configuration, removing config file.')
+        os.remove(CLI_ROOT + '/idp')
+        raise SystemExit
 
     container.create(
         image=auth_image,

@@ -17,12 +17,12 @@ def config_idp():
             if not bool(answers):
                 raise SystemExit
             credential = build(
+                'SSO',
+                'gsuite',
                 'GOOGLE_IDP_ID',
                 answers['GOOGLE_IDP_ID'],
                 'GOOGLE_SP_ID',
-                answers['GOOGLE_SP_ID'],
-                'IDP_TYPE',
-                'gsuite'
+                answers['GOOGLE_SP_ID']
             )
             create(credential)
         elif provider_answer['provider'] == 'Microsoft Azure':
@@ -30,12 +30,12 @@ def config_idp():
             if not bool(answers):
                 raise SystemExit
             credential = build(
+                'SSO',
+                'azure',
                 'AZURE_TENANT_ID',
                 answers['AZURE_TENANT_ID'],
                 'AZURE_APP_ID_URI',
-                answers['AZURE_APP_ID_URI'],
-                'IDP_TYPE',
-                'azure'
+                answers['AZURE_APP_ID_URI']
             )
             create(credential)
         else:
