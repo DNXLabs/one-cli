@@ -59,8 +59,11 @@ Options:
   --help     Show this message and exit.
 
 Commands:
+  app        Group of app commands wrapped inside docker.
   idp        Manage the IDP configuration in your local.
+  init       Create config file for CLI in current directory.
   login      Group of commands to login specifying one SSO provider.
+  my_plugin  My plugin command
   terraform  Group of terraform commands wrapped inside docker.
   workspace  Manage workspaces.
 ```
