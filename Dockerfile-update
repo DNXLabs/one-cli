@@ -1,0 +1,18 @@
+FROM alpine:3.12
+
+RUN apk --no-cache update && \
+    apk --no-cache add \
+        less \
+        bash \
+        wget \
+        curl \
+        zip \
+        sudo \
+        git && \
+    rm -rf /var/cache/apk/*
+
+WORKDIR /work
+
+ADD get_one.sh .
+
+ENTRYPOINT [ "/bin/bash", "get_one.sh" ]
