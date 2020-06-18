@@ -3,7 +3,8 @@
 import os
 from os import path
 import click
-from one.utils.environment.common import load_environments, get_cli_root
+from one.__init__ import CLI_ROOT
+from one.utils.environment.common import load_environments
 from one.__init__ import __version__
 from one.commands.app import app
 from one.commands.idp import idp
@@ -14,8 +15,8 @@ from one.commands.workspace import workspace
 from one.utils.plugins import load_plugins
 
 
-if not path.exists(get_cli_root()):
-    os.mkdir(get_cli_root())
+if not path.exists(CLI_ROOT):
+    os.mkdir(CLI_ROOT)
 
 load_environments()
 

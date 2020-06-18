@@ -1,6 +1,8 @@
-# -*- coding: utf-8 -*-
+from pathlib import Path
 
 __version__ = '0.4.2'
 
-CLI_ROOT = '/.one'
+home = str(Path.home())
+
+CLI_ROOT = home + '/.one'
 CONFIG_FILE = './one.yaml'

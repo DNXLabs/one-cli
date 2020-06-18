@@ -1,47 +1,36 @@
 import click
 import shutil
+import os
 from one.docker.container import Container
 from one.docker.image import Image
-from one.utils.environment.common import get_env_idp, get_cli_root
+from one.utils.environment.idp import get_env_idp
+from one.__init__ import CLI_ROOT
 
 container = Container()
 image = Image()
 
 
-@click.group(help='Group of commands to login specifying one SSO provider.')
-def login():
-    pass
-
-
-@login.command(help='Login with GSuite.')
-def gsuite():
-    f = open('.env', 'w')
-    f.write('NONE=')
-    f.close()
+@click.command(help='Login using your configured SSO provider.')
+def login(auth_image=None):
+    with open(CLI_ROOT + '/.env', 'w') as file:
+        file.write('NONE=')
+        file.close()
 
     env_idp = get_env_idp()
-    gsuite_auth_image = image.get_image('gsuite')
+
+    if 'SSO' in env_idp:
+        click.echo('Login with %s.\n' % (env_idp['SSO']))
+        auth_image = image.get_image(env_idp['SSO'])
+    else:
+        click.echo('Invalid SSO configuration, removing config file.')
+        os.remove(CLI_ROOT + '/idp')
+        raise SystemExit
+
+    credentials_volume = CLI_ROOT + ':/work'
     container.create(
-        image=gsuite_auth_image,
-        volumes=['.:/work'],
+        image=auth_image,
+        volumes=[credentials_volume],
         environment=env_idp
     )
 
-    shutil.move('.env', get_cli_root() + '/credentials')
-
-
-@login.command(help='Login with Azure.')
-def azure():
-    f = open('.env', 'w')
-    f.write('NONE=')
-    f.close()
-
-    env_idp = get_env_idp()
-    azure_auth_image = image.get_image('azure')
-    container.create(
-        image=azure_auth_image,
-        volumes=['.:/work'],
-        environment=env_idp
-    )
-
-    shutil.move('.env', get_cli_root() + '/credentials')
+    shutil.move(CLI_ROOT + '/.env', CLI_ROOT + '/credentials')
