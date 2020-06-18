@@ -10,6 +10,7 @@ from one.commands.app import app
 from one.commands.idp import idp
 from one.commands.init import init
 from one.commands.login import login
+from one.commands.update import update
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.utils.plugins import load_plugins
@@ -28,7 +29,7 @@ def cli():
     pass
 
 
-COMMAND_DIRS = [app, idp, init, login, terraform, workspace]
+COMMAND_DIRS = [app, idp, init, login, update, terraform, workspace]
 
 
 for command in COMMAND_DIRS:
