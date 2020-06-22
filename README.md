@@ -3,6 +3,7 @@
 CLI to manage all stacks from DNX.
 
 ![Build](https://github.com/DNXLabs/one-cli/workflows/Build/badge.svg)
+[![PyPI](https://badge.fury.io/py/one-cli.svg)](https://pypi.python.org/pypi/one-cli/)
 [![LICENSE](https://img.shields.io/github/license/DNXLabs/one-cli)](https://github.com/DNXLabs/one-cli/blob/master/LICENSE)
 
 ## Quick start
@@ -35,7 +36,7 @@ sudo chmod +x /usr/local/bin/one
 ```
 
 #### Install with PyPi
-PyPi Site: [one-cli](https://pypi.org/project/one-cli)
+[PyPI Project](https://pypi.org/project/one-cli)
 ```bash
 pip3 install one-cli
 
