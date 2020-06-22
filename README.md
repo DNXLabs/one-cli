@@ -34,6 +34,16 @@ sudo curl -L https://github.com/DNXLabs/one-cli/releases/download/$ONE_VERSION/o
 sudo chmod +x /usr/local/bin/one
 ```
 
+#### Install with PyPi
+PyPi Site: [one-cli](https://pypi.org/project/one-cli)
+```bash
+pip3 install one-cli
+
+# or setting a version
+
+pip3 install one-cli==<version>
+```
+
 ## Running with Docker
 To easy start with docker just add this line to your `bash profile`.
 ```bash
@@ -135,7 +145,6 @@ deactivate
 #### Install dependencies
 
 ```bash
-pip3 install -r requirements.txt
 pip3 install --editable .
 ```
 
