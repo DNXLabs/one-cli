@@ -1,15 +1,17 @@
+name: Upload Release Asset
+
 on:
   push:
     tags:
       - '*'
 
-name: Upload Release Asset
-
 jobs:
 
   create_release:
+
     name: Create Release
     runs-on: [macOS-latest]
+
     steps:
       - name: Check out code
         uses: actions/checkout@v1
@@ -35,12 +37,14 @@ jobs:
           path: release_url.txt
 
   build_and_upload:
-    needs: [create_release]
+
     name: Build and Upload Release Asset
+    needs: [create_release]
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

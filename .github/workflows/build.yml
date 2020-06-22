@@ -21,8 +21,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
     - name: Build Binary
-      run: |
-        pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
+      run: pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
     - name: Lint with flake8
       run: |
         pip install flake8
