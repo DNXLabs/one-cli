@@ -63,7 +63,7 @@ def plan(workspace, aws_role):
 @click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
 def apply(workspace, aws_role):
     envs = environment.build(workspace, aws_role).get_env()
-    command = 'terraform apply .terraform-plan-' + envs['WORKSPACE']
+    command = 'apply .terraform-plan-' + envs['WORKSPACE']
     container.create(
         image=TERRAFORM_IMAGE,
         command=command,
