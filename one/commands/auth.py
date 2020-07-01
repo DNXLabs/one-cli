@@ -6,6 +6,7 @@ from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.prompt import style
 from one.utils.environment.idp import get_env_idp
+from one.utils.environment.common import create_credential
 from one.prompt.auth import AUTH_QUESTIONS, AWS_ACCESS_KEY_QUESTIONS
 from one.__init__ import CLI_ROOT
 
@@ -13,7 +14,7 @@ container = Container()
 image = Image()
 
 
-@click.command(help='Authentication using your configured SSO provider or AWS IAM user.')
+@click.command(help='Authentication using SSO provider or AWS IAM user.')
 def auth(auth_image=None):
 
     auth_answer = prompt(AUTH_QUESTIONS, style=style)
@@ -52,16 +53,6 @@ def auth(auth_image=None):
             'AWS_SECRET_ACCESS_KEY': aws_auth_answer['AWS_SECRET_ACCESS_KEY'],
             'REGION': aws_auth_answer['REGION']
         }
-        create(credential, CLI_ROOT + '/credentials')
+        create_credential(credential, CLI_ROOT + '/credentials')
     else:
         raise SystemExit
-
-
-def create(credential, path):
-    file = ''
-    for key, value in credential.items():
-        file += '%s=%s\n' % (key, value)
-
-    with open(path, 'w+') as f:
-        f.write(file)
-        f.close()
