@@ -39,7 +39,7 @@ def config_idp():
 
 def get_env_idp():
     if not path.exists(CLI_ROOT + '/idp'):
-        click.echo('You do not have any IDP configured, starting configuration.\n')
+        click.echo('\nYou do not have any IDP configured, starting configuration.\n')
         config_idp()
 
     env_idp = docker.utils.parse_env_file(CLI_ROOT + '/idp')
