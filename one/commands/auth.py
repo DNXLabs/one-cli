@@ -13,8 +13,8 @@ container = Container()
 image = Image()
 
 
-@click.command(help='Login using your configured SSO provider or AWS IAM user.')
-def login(auth_image=None):
+@click.command(help='Authentication using your configured SSO provider or AWS IAM user.')
+def auth(auth_image=None):
 
     auth_answer = prompt(AUTH_QUESTIONS, style=style)
     if not auth_answer:
