@@ -27,7 +27,7 @@ class EnvironmentAws(Environment):
         if workspace is not None and self.workspace == workspace and not force:
             return self
 
-        self.workspace = workspace or getenv('WORKSPACE')
+        self.workspace = workspace or getenv('WORKSPACE') or 'default'
         click.echo('Setting workspace to %s' % (self.workspace))
 
         aws_account_id = get_workspace_value(self.workspace, 'aws-account-id')
