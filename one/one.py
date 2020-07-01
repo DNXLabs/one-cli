@@ -13,6 +13,7 @@ from one.commands.auth import auth
 from one.commands.update import update
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
+from one.commands.aws import aws
 from one.utils.plugins import load_plugins
 
 
@@ -29,7 +30,7 @@ def cli():
     pass
 
 
-COMMAND_DIRS = [app, idp, init, auth, update, terraform, workspace]
+COMMAND_DIRS = [aws, app, idp, init, auth, update, terraform, workspace]
 
 
 for command in COMMAND_DIRS:
