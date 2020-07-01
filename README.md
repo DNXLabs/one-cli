@@ -61,7 +61,7 @@ docker run -it -v /var/run/docker.sock:/var/run/docker.sock \
 
 ## Usage
 ```
-Usage: one [OPTIONS] COMMAND [ARGS]...
+Usage: cli.py [OPTIONS] COMMAND [ARGS]...
 
   CLI to manage all stacks from DNX.
 
@@ -71,11 +71,11 @@ Options:
 
 Commands:
   app        Group of app commands wrapped inside docker.
+  auth       Authentication using SSO provider or AWS IAM user.
   idp        Manage the IDP configuration in your local.
   init       Create config file for CLI in current directory.
-  login      Group of commands to login specifying one SSO provider.
-  my_plugin  My plugin command
   terraform  Group of terraform commands wrapped inside docker.
+  update     Update CLI moving to latest stable version.
   workspace  Manage workspaces.
 ```
 
