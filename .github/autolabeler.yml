@@ -1,0 +1,29 @@
+commands:
+    - "one/commands/**/*"
+app:
+    - "one/commands/app.py"
+auth:
+    - "one/commands/auth.py"
+aws:
+    - "one/commands/aws.py"
+idp:
+    - "one/commands/idp.py"
+init:
+    - "one/commands/init.py"
+terraform:
+    - "one/commands/terraform.py"
+update:
+    - "one/commands/update.py"
+workspace:
+    - "one/commands/workspace.py"
+docker:
+    - "one/docker/**/*"
+prompt:
+    - "one/prompt/**/*"
+utils:
+    - "one/utils/**/*"
+setup:
+    - "setup.py"
+docs:
+    - "README.md"
+    - "docs/**/*"
