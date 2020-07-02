@@ -45,19 +45,14 @@ pip3 install one-cli
 pip3 install one-cli==<version>
 ```
 
-## Running with Docker
-To easy start with docker just add this line to your `bash profile`.
-```bash
-alias one='docker run -it -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root -v $HOME/.one:/root/.one dnxsolutions/one-cli'
-```
+##  CI/CD pipelines with Docker
+To use the CLI within any CI/CD pipeline we encourage to use our docker image:
 
-Or if you want to run the script by yourself, here we have one example:
-```bash
-docker run -it -v /var/run/docker.sock:/var/run/docker.sock \
-               -v $HOME/.one:/root/.one \
-               --entrypoint /bin/bash \
-               dnxsolutions/one-cli
-```
+[dnxsolutions/one-cli](https://hub.docker.com/repository/docker/dnxsolutions/one-cli)
+
+> WARNING: This docker image should only be used inside CI/CD pipelines and it can generate error if used as an alias.
+
+
 
 ## Usage
 ```
