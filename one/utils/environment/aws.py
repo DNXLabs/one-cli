@@ -17,22 +17,19 @@ class EnvironmentAws(Environment):
         self.env_workspace = {}
         self.workspace = ''
 
-    def build(self, workspace, aws_role, force=False):
+    def build(self, workspace=None, aws_role=None, aws_account_id=None, aws_assume_role=None):
         if path.exists(CLI_ROOT + '/credentials'):
             self.env_auth = docker.utils.parse_env_file(CLI_ROOT + '/credentials')
         else:
             click.echo('Please login before proceeding')
             raise SystemExit
 
-        if workspace is not None and self.workspace == workspace and not force:
-            return self
-
         self.workspace = workspace or getenv('WORKSPACE') or 'default'
         click.echo('Setting workspace to %s' % (self.workspace))
 
-        aws_account_id = get_workspace_value(self.workspace, 'aws-account-id')
+        aws_account_id = aws_account_id or get_workspace_value(self.workspace, 'aws-account-id')
         aws_role = aws_role or get_workspace_value(self.workspace, 'aws-role')
-        aws_assume_role = get_workspace_value(self.workspace, 'aws-assume-role', 'false')
+        aws_assume_role = aws_assume_role or get_workspace_value(self.workspace, 'aws-assume-role', 'false')
 
         self.env_workspace = {
             'TF_VAR_aws_role': aws_role,
@@ -41,19 +38,19 @@ class EnvironmentAws(Environment):
         }
 
         if aws_assume_role.lower() == 'true':
-            self.aws_assume_role(role=aws_role, account_id=aws_account_id)
+            self.aws_assume_role(aws_role=aws_role, aws_account_id=aws_account_id)
 
         return self
 
-    def aws_assume_role(self, role, account_id):
-        click.echo('Assuming role %s at %s' % (role, account_id))
+    def aws_assume_role(self, aws_role, aws_account_id):
+        click.echo('Assuming role %s at %s' % (aws_role, aws_account_id))
         container = Container()
         image = Image()
 
         AWS_IMAGE = image.get_image('aws')
         envs = {
-            'AWS_ROLE': role,
-            'AWS_ACCOUNT_ID': account_id,
+            'AWS_ROLE': aws_role,
+            'AWS_ACCOUNT_ID': aws_account_id,
         }
         envs.update(self.env_auth)
 
@@ -64,7 +61,8 @@ class EnvironmentAws(Environment):
             command=command,
             volumes=['.:/work'],
             environment=envs,
-            tty=False, stdin_open=False
+            tty=False,
+            stdin_open=False
         )
 
         self.env_assume = parse_env('\n'.join(output.splitlines()))

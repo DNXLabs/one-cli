@@ -21,23 +21,34 @@ class AppRegistryEcr(AppRegistry):
         return "%s.dkr.ecr.%s.amazonaws.com/%s" % (self.ecr_aws_account_id, self.ecr_aws_region, image_tag)
 
     def docker_login(self, environment):
-        if get_config_value('app.docker.registry-options.ecr-aws-assume-role', 'false').lower() == "true":
-            aws_account_id = get_config_value('app.docker.registry-options.ecr-aws-account-id')
-            aws_role = get_config_value('app.docker.registry-options.ecr-aws-role')
-            environment.aws_assume_role(role=aws_role, account_id=aws_account_id)
+        aws_account_id = get_config_value('app.docker.registry-options.ecr-aws-account-id')
+        aws_role = get_config_value('app.docker.registry-options.ecr-aws-role')
+        aws_assume_role = get_config_value('app.docker.registry-options.ecr-aws-assume-role', 'false').lower()
 
-        envs = environment.get_env()
+        envs = environment.build(
+            aws_assume_role=aws_assume_role,
+            aws_role=aws_role,
+            aws_account_id=aws_account_id
+        ).get_env()
 
         docker_get_login = container.create(
                 image=AWS_IMAGE,
                 command="ecr get-login --no-include-email --registry-ids %s --region %s" % (
-                    self.ecr_aws_account_id, self.ecr_aws_region),
+                    self.ecr_aws_account_id,
+                    self.ecr_aws_region
+                ),
                 environment=envs,
-                tty=False)
+                tty=False
+        )
+
+        if ' '.join(docker_get_login.split()[:4]) == 'Unable to locate credentials.':
+            click.echo(
+                click.style('ERROR: ', fg='red') +
+                docker_get_login
+            )
+            raise SystemExit
+
         docker_login_command_parts = docker_get_login.strip().split(' ')
-        # docker_login_username = docker_login_command_parts[3]
-        # docker_login_password = docker_login_command_parts[5]
-        # docker_login_endpoint = docker_login_command_parts[6]
 
         subprocess.call(list(filter(None, docker_login_command_parts)))
 
