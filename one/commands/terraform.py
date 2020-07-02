@@ -2,6 +2,7 @@ import click
 from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment.aws import EnvironmentAws
+from one.utils.terraform_modules import terraform_modules_check
 
 image = Image()
 container = Container()
@@ -42,6 +43,8 @@ def init(workspace, aws_role):
         volumes=['.:/work'],
         environment=envs
     )
+
+    terraform_modules_check()
 
 
 @terraform.command(help='Run terraform plan inside the docker container.')
