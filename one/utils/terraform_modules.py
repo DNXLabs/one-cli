@@ -17,7 +17,9 @@ def terraform_modules_check():
 
     with open('.terraform/modules/modules.json') as modules_json_file:
         data = json.load(modules_json_file)
-        click.echo('\nDNX modules version check:\n')
+        click.echo(
+            click.style('\nInitializing DNX modules check...', bold=True)
+        )
         for module in data['Modules']:
 
             if not module['Source']:
@@ -27,16 +29,17 @@ def terraform_modules_check():
             if len(split) >= 5 and split[4] == 'DNXLabs':
                 name = re.split(r'[./]\s*', module['Source'])[5]
                 version = module['Source'].split('=')[1]
+                key = module['Key']
                 api_version = api['modules'][name]['tag_name']
                 if api_version != version:
                     click.echo(
-                        '* ' + name + ': ' +
+                        '- ' + name + '/' + key + ': ' +
                         click.style(version, fg='yellow') +
                         ' ~> ' +
                         click.style(api_version, fg='green')
                     )
                 else:
                     click.echo(
-                        '* ' + name + ': ' +
+                        '- ' + name + '/' + key + ': ' +
                         click.style(version, fg='green')
                     )
