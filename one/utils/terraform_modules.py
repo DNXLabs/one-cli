@@ -30,7 +30,14 @@ def terraform_modules_check():
                 name = re.split(r'[./]\s*', module['Source'])[5]
                 version = module['Source'].split('=')[1]
                 key = module['Key']
-                api_version = api['modules'][name]['tag_name']
+                api_version = ''
+                try:
+                    api_version = api['modules'][name]['tag_name']
+                except KeyError:
+                    click.echo(
+                        click.style('ERROR ', fg='red') +
+                        'Could not find module ' + name + ' at DNX modules API.'
+                    )
                 if api_version != version:
                     click.echo(
                         '- ' + name + '/' + key + ': ' +
