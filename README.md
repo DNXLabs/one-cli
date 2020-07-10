@@ -144,6 +144,17 @@ deactivate
 pip3 install --editable .
 ```
 
+#### Run tests
+First make sure to install the test dependencies:
+```
+pip3 install -r requirements-test.txt
+```
+
+To run the test suite:
+```bash
+pytest -v tests/
+```
+
 #### Manualy generate binary
 ```bash
 pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
