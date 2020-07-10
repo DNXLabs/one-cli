@@ -144,7 +144,7 @@ deactivate
 pip3 install --editable .
 ```
 
-#### Run tests
+#### Run tests and lint
 First make sure to install the test dependencies:
 ```
 pip3 install -r requirements-test.txt
@@ -153,6 +153,11 @@ pip3 install -r requirements-test.txt
 To run the test suite:
 ```bash
 pytest -v tests/
+```
+
+To run the lint check:
+```bash
+flake8 . --count --max-complexity=10 --max-line-length=127 --statistics --exclude env
 ```
 
 #### Manualy generate binary
