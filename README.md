@@ -125,28 +125,30 @@ workspaces:
 
 #### Dependencies
 - Python 3
-
-#### Python Virtual Environment
-```bash
-# Create environment
-python3 -m venv env
-
-# To activate the environment
-source env/bin/activate
-
-# When you finish you can exit typing
-deactivate
-```
+- Make
+- virtualenv
 
 #### Install dependencies
-
 ```bash
-pip3 install --editable .
+make install
+```
+
+#### Run tests and flake8
+To run the test suite:
+```bash
+make test
+```
+
+To run the flake8 lint check:
+```bash
+make flake8
 ```
 
 #### Manualy generate binary
+> Notice that when the command finishes successfully two folders will be generated in the project (**build** and **dist**). The CLI binary file can be found at **dist**.
+
 ```bash
-pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
+make build
 ```
 
 ## Plugin System
