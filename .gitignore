@@ -7,5 +7,6 @@ one.spec
 one/__init__.pyc
 one/__main__.pyc
 one/one.pyc
-env
+.venv
 one_cli.egg-info
+.pytest_cache
