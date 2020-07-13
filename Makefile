@@ -16,6 +16,7 @@ clean:
 	rm -rf one_cli.egg-info
 	rm -rf .pytest_cache
 	rm -rf __pycache__
+	rm -rf one.spec
 	find -iname "*.pyc" -delete
 
 
