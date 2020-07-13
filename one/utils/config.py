@@ -30,18 +30,6 @@ def get_config_value(key, default=None):
     return value
 
 
-def get_workspaces():
-    workspaces = []
-    if path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE) as file:
-            docs = yaml.load(file, Loader=yaml.BaseLoader)
-            for workspace_key in docs['workspaces'].keys():
-                workspaces.append(workspace_key)
-        file.close()
-
-    return workspaces
-
-
 def get_workspace_value(workspace_name, variable, default=None):
     value = default
     if path.exists(CONFIG_FILE):
