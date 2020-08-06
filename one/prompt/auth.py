@@ -1,4 +1,4 @@
-auth_types = ['SSO', 'AWS IAM user']
+auth_types = ['AWS SSO', 'External SSO', 'AWS IAM user']
 
 DEFAULT_REGION = 'ap-southeast-2'
 

@@ -21,7 +21,7 @@ def auth(auth_image=None):
     if not auth_answer:
         raise SystemExit
 
-    if auth_answer['auth'] == 'SSO':
+    if auth_answer['auth'] == 'External SSO':
         with open(CLI_ROOT + '/.env', 'w') as file:
             file.write('NONE=')
             file.close()
@@ -54,5 +54,22 @@ def auth(auth_image=None):
             'REGION': aws_auth_answer['REGION']
         }
         create_credential(credential, CLI_ROOT + '/credentials')
+
+    elif auth_answer['auth'] == 'AWS SSO':
+        auth_image = image.get_image('aws_v2')
+        work_volume = CLI_ROOT + ':/work'
+        env_idp = get_env_idp()
+        env_idp['AWS_CONFIG_FILE'] = '/work/config'
+        env_idp['AWS_SSO_PROFILE'] = 'dnx' or 'default'
+
+        container.create(
+            image=auth_image,
+            entrypoint='bash',
+            command='/opt/scripts/aws-sso.sh',
+            volumes=[work_volume],
+            environment=env_idp
+        )
+
+        shutil.move(CLI_ROOT + '/.env', CLI_ROOT + '/credentials')
     else:
         raise SystemExit
