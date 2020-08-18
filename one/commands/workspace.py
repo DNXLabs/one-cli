@@ -19,7 +19,7 @@ def list_workspaces():
 @workspace.command(help='Change environment variables to another workspace.')
 @click.option('-n', '--name', default=None, type=str, help='Workspace name.')
 def change(name):
-    
+
     workspaces = get_workspaces()
 
     if name in workspaces:
