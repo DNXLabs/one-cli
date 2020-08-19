@@ -21,7 +21,7 @@ def list_workspaces():
 def change(name):
     workspaces = get_workspaces()
 
-    if name == None:
+    if name is None:
         selected_workspace = workspace_question(workspaces)
     elif name in workspaces:
         selected_workspace = name
@@ -33,6 +33,7 @@ def change(name):
     f = open('.one.workspace', 'w')
     f.write('WORKSPACE=' + selected_workspace + '\n')
     f.close()
+
 
 def workspace_question(workspaces):
     workspaces_obj = []
@@ -50,6 +51,5 @@ def workspace_question(workspaces):
 
     answers = prompt(questions, style=style)
     selected_workspace = answers['workspace']
-    
-    return selected_workspace
 
+    return selected_workspace
