@@ -17,39 +17,34 @@ def list_workspaces():
 
 
 @workspace.command(help='Change environment variables to another workspace.')
-@click.option('-n', '--name', default=None, type=str, help='Workspace name.')
-def change(name):
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace name.')
+def change(workspace: str):
     workspaces = get_workspaces()
 
-    if name is None:
-        selected_workspace = workspace_question(workspaces)
-    elif name in workspaces:
-        selected_workspace = name
-        click.echo('Selected workspace: ' + click.style(name, fg='red'))
+    if workspace in workspaces:
+        click.echo('Selected workspace: ' + click.style(workspace, fg='green', bold=True))
     else:
-        click.echo('Workspace not found.', err=True)
-        selected_workspace = workspace_question(workspaces)
+        if workspace:
+            click.echo('Workspace ' + click.style(workspace, fg='red', bold=True) + ' not found.', err=True)
+
+        workspaces_obj = []
+        for workspace in workspaces:
+            workspaces_obj.append({'name': workspace})
+
+        questions = [
+            {
+                'type': 'list',
+                'message': 'Select workspace',
+                'name': 'workspace',
+                'choices': workspaces_obj
+            }
+        ]
+        try:
+            answers = prompt(questions, style=style)
+        except KeyError:
+            raise SystemExit
+        workspace = answers.get('workspace', 'default')
 
     f = open('.one.workspace', 'w')
-    f.write('WORKSPACE=' + selected_workspace + '\n')
+    f.write('WORKSPACE=' + workspace + '\n')
     f.close()
-
-
-def workspace_question(workspaces):
-    workspaces_obj = []
-    for workspace in workspaces:
-        workspaces_obj.append({'name': workspace})
-
-    questions = [
-        {
-            'type': 'list',
-            'message': 'Select workspace',
-            'name': 'workspace',
-            'choices': workspaces_obj
-        }
-    ]
-
-    answers = prompt(questions, style=style)
-    selected_workspace = answers['workspace']
-
-    return selected_workspace
