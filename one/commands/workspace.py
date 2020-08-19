@@ -17,23 +17,34 @@ def list_workspaces():
 
 
 @workspace.command(help='Change environment variables to another workspace.')
-def change():
-    workspaces_obj = []
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace name.')
+def change(workspace: str):
     workspaces = get_workspaces()
-    for workspace in workspaces:
-        workspaces_obj.append({'name': workspace})
 
-    questions = [
-        {
-            'type': 'list',
-            'message': 'Select workspace',
-            'name': 'workspace',
-            'choices': workspaces_obj
-        }
-    ]
+    if workspace in workspaces:
+        click.echo('Selected workspace: ' + click.style(workspace, fg='green', bold=True))
+    else:
+        if workspace:
+            click.echo('Workspace ' + click.style(workspace, fg='red', bold=True) + ' not found.', err=True)
 
-    answers = prompt(questions, style=style)
+        workspaces_obj = []
+        for workspace in workspaces:
+            workspaces_obj.append({'name': workspace})
+
+        questions = [
+            {
+                'type': 'list',
+                'message': 'Select workspace',
+                'name': 'workspace',
+                'choices': workspaces_obj
+            }
+        ]
+        try:
+            answers = prompt(questions, style=style)
+        except KeyError:
+            raise SystemExit
+        workspace = answers.get('workspace', 'default')
 
     f = open('.one.workspace', 'w')
-    f.write('WORKSPACE=' + answers['workspace'] + '\n')
+    f.write('WORKSPACE=' + workspace + '\n')
     f.close()
