@@ -1,7 +1,9 @@
 import click
 from one.utils.prompt import style
 from PyInquirer import prompt
-from one.utils.config import get_workspaces
+from one.utils.config import get_workspaces, get_current_workspace_value
+from one.__init__ import WORKSPACE_FILE
+
 
 
 @click.group(help='Manage workspaces.')
@@ -12,8 +14,17 @@ def workspace():
 @workspace.command(name='list', help='List all workspaces.')
 def list_workspaces():
     workspaces = get_workspaces()
+    current_workspace = get_current_workspace_value()
+
     for workspace in workspaces:
-        click.echo('- ' + workspace)
+        fg = 'white'
+        mk = ''
+        if workspace == current_workspace:
+            fg='green'  
+            mk = '*'
+        click.echo('- ' + click.style(workspace, fg=fg) + mk)
+        
+
 
 
 @workspace.command(help='Change environment variables to another workspace.')
@@ -45,6 +56,11 @@ def change(workspace: str):
             raise SystemExit
         workspace = answers.get('workspace', 'default')
 
-    f = open('.one.workspace', 'w')
+    f = open(WORKSPACE_FILE, 'w')
     f.write('WORKSPACE=' + workspace + '\n')
     f.close()
+
+@workspace.command(name='show', help='Show current workspace.')
+def workspace_show():
+    workspace = get_current_workspace_value();
+    click.echo('Selected workspace: ' + click.style(workspace, fg='green', bold=True))

@@ -1,7 +1,7 @@
 import click
 import yaml
 from os import path
-from one.__init__ import CONFIG_FILE
+from one.__init__ import CONFIG_FILE, WORKSPACE_FILE
 
 
 if not path.exists('./one.yaml'):
@@ -66,3 +66,17 @@ def get_workspace_value(workspace_name, variable, default=None):
         file.close()
 
     return str(value)
+
+
+def get_current_workspace_value(default=None):
+
+    if path.exists(WORKSPACE_FILE):
+        with open(WORKSPACE_FILE, "r") as file: 
+            workspace = file.readline()[10::1].rstrip("\n")
+            # for last_line in file: 
+            #     pass 
+        # with open(WORKSPACE_FILE,'r') as file:
+        #     workspace = file.read()[10::]
+        file.close()
+
+    return str(workspace)
