@@ -18,14 +18,12 @@ def list_workspaces():
 
     for workspace in workspaces:
         fg = 'white'
-        mk = ''
+        mk = '  '
         if workspace == current_workspace:
             fg='green'  
-            mk = '*'
-        click.echo('- ' + click.style(workspace, fg=fg) + mk)
+            mk = '* '
+        click.echo(mk + click.style(workspace, fg=fg))
         
-
-
 
 @workspace.command(help='Change environment variables to another workspace.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace name.')
@@ -62,5 +60,5 @@ def change(workspace: str):
 
 @workspace.command(name='show', help='Show current workspace.')
 def workspace_show():
-    workspace = get_current_workspace_value();
+    workspace = get_current_workspace_value() or 'Not found.' ;
     click.echo('Selected workspace: ' + click.style(workspace, fg='green', bold=True))
