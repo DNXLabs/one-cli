@@ -53,7 +53,6 @@ To use the CLI within any CI/CD pipeline we encourage to use our docker image:
 > WARNING: This docker image should only be used inside CI/CD pipelines and it can generate error if used as an alias.
 
 
-
 ## Usage
 ```
 Usage: cli.py [OPTIONS] COMMAND [ARGS]...
@@ -82,8 +81,10 @@ images:
   gsuite: dnxsolutions/aws-google-auth:latest
   azure: dnxsolutions/docker-aws-azure-ad:latest
   aws: dnxsolutions/aws:1.18.44-dnx2
+  aws-2: dnxsolutions/aws:2.0.37-dnx1
   ecs-deploy: dnxsolutions/ecs-deploy:1.2.0
 
+# ECS App
 app:
   name: copacabana
   port: 80
@@ -98,14 +99,37 @@ app:
       ecr-aws-role: <redact>
   ecs-task-definition-file: task-definition.tpl.json
 
+# Static App
+app:
+  type: static
+  src: ./build
+  s3_bucket_name: <redact>
+  distribution_id: <redact>
+
 workspaces:
-  mgmt-app:
+
+  # ECS App example:
+  mgmt-ecs-app:
     type: ecs
     aws-account-id: <redact>
     aws-role: <redact>
-    aws-assume-role: true|false
+    aws-assume-role: true|false (default to false)
     aws-region: ap-southeast-2
     ecs-cluster-name: cluster-01
+
+  # Static App example:
+  mgmt-static-app:
+    aws-account-id: <redact>
+    aws-role: <redact>
+    aws-region: ap-southeast-2
+    aws-assume-role: true
+    # Override the template static app
+    app:
+      src: ./build
+      s3_bucket_name: <redact>
+      distribution_id: <redact>
+
+  # Terraform example
   mgmt:
     aws-account-id:
     aws-role:
