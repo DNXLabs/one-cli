@@ -59,7 +59,7 @@ def configure_azure():
 
 
 def configure_aws_sso():
-    auth_image = image.get_image('aws_v2')
+    auth_image = image.get_image('aws-v2')
     work_volume = CLI_ROOT + ':/work'
     env_sso = {}
     env_sso['AWS_CONFIG_FILE'] = '/work/config'
