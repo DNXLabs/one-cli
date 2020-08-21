@@ -71,12 +71,8 @@ def get_workspace_value(workspace_name, variable, default=None):
 def get_current_workspace_value(default=None):
 
     if path.exists(WORKSPACE_FILE):
-        with open(WORKSPACE_FILE, "r") as file: 
-            workspace = file.readline()[10::1].rstrip("\n")
-            # for last_line in file: 
-            #     pass 
-        # with open(WORKSPACE_FILE,'r') as file:
-        #     workspace = file.read()[10::]
+        with open(WORKSPACE_FILE, 'r') as file:
+            workspace = file.readline()[10::1].rstrip('\n')
         file.close()
 
     return str(workspace)

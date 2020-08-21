@@ -5,7 +5,6 @@ from one.utils.config import get_workspaces, get_current_workspace_value
 from one.__init__ import WORKSPACE_FILE
 
 
-
 @click.group(help='Manage workspaces.')
 def workspace():
     pass
@@ -20,10 +19,10 @@ def list_workspaces():
         fg = 'white'
         mk = '  '
         if workspace == current_workspace:
-            fg='green'  
+            fg = 'green'  
             mk = '* '
         click.echo(mk + click.style(workspace, fg=fg))
-        
+
 
 @workspace.command(help='Change environment variables to another workspace.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace name.')
@@ -58,7 +57,8 @@ def change(workspace: str):
     f.write('WORKSPACE=' + workspace + '\n')
     f.close()
 
+
 @workspace.command(name='show', help='Show current workspace.')
 def workspace_show():
-    workspace = get_current_workspace_value() or 'Not found.' ;
+    workspace = get_current_workspace_value() or 'Not found.'
     click.echo('Selected workspace: ' + click.style(workspace, fg='green', bold=True))
