@@ -19,7 +19,7 @@ def list_workspaces():
         fg = 'white'
         mk = '  '
         if workspace == current_workspace:
-            fg = 'green'  
+            fg = 'green'
             mk = '* '
         click.echo(mk + click.style(workspace, fg=fg))
 
