@@ -1,9 +1,9 @@
-prompt_providers = ['Google G Suite', 'Microsoft Azure']
+prompt_providers = ['Google G Suite SSO', 'Microsoft Azure SSO', 'AWS SSO', 'AWS IAM user']
 
 PROVIDER_QUESTIONS = [
     {
         'type': 'list',
-        'message': 'Select provider',
+        'message': 'Select authentication method:',
         'name': 'provider',
         'choices': prompt_providers
     }

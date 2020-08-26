@@ -18,8 +18,8 @@ class EnvironmentAws(Environment):
         self.workspace = ''
 
     def build(self, workspace=None, aws_role=None, aws_account_id=None, aws_assume_role=None):
-        if path.exists(CLI_ROOT + '/credentials'):
-            self.env_auth = docker.utils.parse_env_file(CLI_ROOT + '/credentials')
+        if path.exists(CLI_ROOT + '/secrets'):
+            self.env_auth = docker.utils.parse_env_file(CLI_ROOT + '/secrets')
         else:
             click.echo('Please login before proceeding')
             raise SystemExit

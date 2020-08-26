@@ -9,7 +9,7 @@ ADD . /usr/src/one
 RUN pip install --editable /usr/src/one
 
 RUN mkdir -p /root/.one/ && \
-    touch /root/.one/credentials
+    touch /root/.one/secrets
 
 ENTRYPOINT [ "one" ]
 

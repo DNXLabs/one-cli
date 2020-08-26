@@ -4,10 +4,9 @@ import os
 from os import path
 import click
 from one.__init__ import CLI_ROOT
-from one.utils.environment.common import load_environments
+from dotenv import load_dotenv
 from one.__init__ import __version__
 from one.commands.app import app
-from one.commands.idp import idp
 from one.commands.init import init
 from one.commands.auth import auth
 from one.commands.update import update
@@ -20,7 +19,9 @@ from one.utils.plugins import load_plugins
 if not path.exists(CLI_ROOT):
     os.mkdir(CLI_ROOT)
 
-load_environments()
+
+env_path_workspace = '.one.workspace'
+load_dotenv(dotenv_path=env_path_workspace)
 
 
 @click.version_option(__version__)
@@ -30,7 +31,7 @@ def cli():
     pass
 
 
-COMMAND_DIRS = [aws, aws_v2, app, idp, init, auth, update, terraform, workspace]
+COMMAND_DIRS = [aws, aws_v2, app, init, auth, update, terraform, workspace]
 
 
 for command in COMMAND_DIRS:
