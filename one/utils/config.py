@@ -1,10 +1,11 @@
 import click
+import os
 import yaml
 from os import path
-from one.__init__ import CONFIG_FILE, WORKSPACE_FILE
+from one.__init__ import CONFIG_FILE
 
 
-if not path.exists('./one.yaml'):
+if not path.exists(CONFIG_FILE):
     click.echo(
         click.style('WARN ', fg='yellow') +
         'No config file in current directory.\n'
@@ -14,7 +15,7 @@ if not path.exists('./one.yaml'):
 def get_config_value(key, default=None):
     value = default
     if path.exists(CONFIG_FILE):
-        with open('./one.yaml') as file:
+        with open(CONFIG_FILE) as file:
             docs = yaml.load(file, Loader=yaml.BaseLoader)
             for key_path in key.split('.'):
                 if key_path not in docs:
@@ -69,10 +70,4 @@ def get_workspace_value(workspace_name, variable, default=None):
 
 
 def get_current_workspace_value(default=None):
-
-    if path.exists(WORKSPACE_FILE):
-        with open(WORKSPACE_FILE, 'r') as file:
-            workspace = file.readline()[10::1].rstrip('\n')
-        file.close()
-
-    return str(workspace)
+    return os.getenv('WORKSPACE') or 'default'

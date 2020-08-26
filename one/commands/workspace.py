@@ -16,12 +16,10 @@ def list_workspaces():
     current_workspace = get_current_workspace_value()
 
     for workspace in workspaces:
-        fg = 'white'
-        mk = '  '
         if workspace == current_workspace:
-            fg = 'green'
-            mk = '* '
-        click.echo(mk + click.style(workspace, fg=fg))
+            click.echo('* ' + click.style(workspace, fg='green', bold=True))
+        else:
+            click.echo('  ' + click.style(workspace))
 
 
 @workspace.command(help='Change environment variables to another workspace.')
