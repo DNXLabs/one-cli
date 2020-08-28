@@ -3,9 +3,8 @@
 import os
 from os import path
 import click
-from one.__init__ import CLI_ROOT
 from dotenv import load_dotenv
-from one.__init__ import __version__
+from one.__init__ import __version__, WORKSPACE_FILE, CLI_ROOT
 from one.commands.app import app
 from one.commands.init import init
 from one.commands.auth import auth
@@ -20,9 +19,7 @@ if not path.exists(CLI_ROOT):
     os.mkdir(CLI_ROOT)
 
 
-env_path_workspace = '.one.workspace'
-load_dotenv(dotenv_path=env_path_workspace)
-
+load_dotenv(dotenv_path=WORKSPACE_FILE, verbose=True)
 
 @click.version_option(__version__)
 @click.group()
