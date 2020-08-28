@@ -84,6 +84,8 @@ images:
   aws-2: dnxsolutions/aws:2.0.37-dnx1
   ecs-deploy: dnxsolutions/ecs-deploy:1.2.0
 
+required_version: ">= 0.5.0, <= 0.7.0"
+
 # ECS App
 app:
   name: copacabana
