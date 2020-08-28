@@ -8,7 +8,6 @@ from one.__init__ import __version__, WORKSPACE_FILE, CLI_ROOT
 from one.commands.app import app
 from one.commands.init import init
 from one.commands.auth import auth
-from one.commands.update import update
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.commands.aws import aws, aws_v2
@@ -29,7 +28,7 @@ def cli():
     pass
 
 
-COMMAND_DIRS = [aws, aws_v2, app, init, auth, update, terraform, workspace]
+COMMAND_DIRS = [aws, aws_v2, app, init, auth, terraform, workspace]
 
 
 for command in COMMAND_DIRS:
