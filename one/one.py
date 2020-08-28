@@ -12,11 +12,13 @@ from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.commands.aws import aws, aws_v2
 from one.utils.plugins import load_plugins
+from one.utils.config import required_version_check
 
 
 if not path.exists(CLI_ROOT):
     os.mkdir(CLI_ROOT)
 
+required_version_check()
 
 load_dotenv(dotenv_path=WORKSPACE_FILE)
 
