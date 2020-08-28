@@ -24,6 +24,7 @@ curl -sSL https://raw.githubusercontent.com/DNXLabs/one-cli/master/shell_complet
 ```
 
 #### Install specific version
+
 ```bash
 export ONE_VERSION=<version>
 
@@ -36,6 +37,7 @@ sudo chmod +x /usr/local/bin/one
 ```
 
 #### Install with PyPi
+
 [PyPI Project](https://pypi.org/project/one-cli)
 ```bash
 pip3 install one-cli
@@ -46,6 +48,7 @@ pip3 install one-cli==<version>
 ```
 
 ##  CI/CD pipelines with Docker
+
 To use the CLI within any CI/CD pipeline we encourage to use our docker image:
 
 [dnxsolutions/one-cli](https://hub.docker.com/repository/docker/dnxsolutions/one-cli)
@@ -74,6 +77,7 @@ Commands:
 ```
 
 ## Configuration Example
+
 one.yaml
 ```yaml
 images:
@@ -153,12 +157,59 @@ workspaces:
       assume-role: true|false
 ```
 
-## Setup
+## Plugin System
+
+To give better support for customization inside the CLI we created a `plugin system` that you can extend code, creating new commands and groups and even modify the existing ones.
+
+All plugins need to be created inside ` ~/.one/plugins/*`
+
+#### Folder Structure
+
+```bash
+└── plugins
+    ├── __init__.py (empty file)
+    └── my_plugin.py
+```
+
+#### Plugin Example
+
+`~/.one/plugins/my_plugin.py`
+```python
+import click
+from one.one import cli
+
+
+def __init__():
+    cli.add_command(my_plugin)
+
+
+@click.command(name='my_plugin', help='My plugin command')
+def my_plugin():
+    click.echo('It works!')
+```
+
+#### Running
+
+```bash
+$ one my_plugin
+It works!
+```
+
+#### Manualy generate binary
+
+```bash
+pip install pyinstaller
+pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
+```
+
+## Development
 
 #### Dependencies
+
 - Python 3
 
 #### Python Virtual Environment
+
 ```bash
 # Create environment
 python3 -m venv env
@@ -176,47 +227,10 @@ deactivate
 pip3 install --editable .
 ```
 
-#### Manualy generate binary
-```bash
-pyinstaller --clean --hidden-import one.__main__ cli.py --onefile --noconsole -n one
-```
-
-## Plugin System
-To give better support for customization inside the CLI we created a `plugin system` that you can extend code, creating new commands and groups and even modify the existing ones.
-
-All plugins need to be created inside ` ~/.one/plugins/*`
-
-#### Folder Structure
-```bash
-└── plugins
-    ├── __init__.py (empty file)
-    └── my_plugin.py
-```
-
-#### Plugin Example
-`~/.one/plugins/my_plugin.py`
-```python
-import click
-from one.one import cli
-
-
-def __init__():
-    cli.add_command(my_plugin)
-
-
-@click.command(name='my_plugin', help='My plugin command')
-def my_plugin():
-    click.echo('It works!')
-```
-
-#### Running
-```bash
-$ one my_plugin
-It works!
-```
-
 ## Author
-Managed by DNX Solutions.
+
+Managed by [DNX Solutions](https://github.com/DNXLabs).
 
 ## License
+
 Apache 2 Licensed. See [LICENSE](https://github.com/DNXLabs/one-cli/blob/master/LICENSE) for full details.
