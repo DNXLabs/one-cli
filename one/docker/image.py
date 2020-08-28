@@ -26,7 +26,7 @@ class Image:
                   'gsuite': GSUITE_AUTH_IMAGE,
                   'azure': AZURE_AUTH_IMAGE,
                   'aws': AWS_IMAGE,
-                  'aws_v2': AWS_V2_IMAGE,
+                  'aws-v2': AWS_V2_IMAGE,
                   'ecs-deploy': ECS_DEPLOY_IMAGE,
                   'cli-update': CLI_UPDATE_IMAGE}
 

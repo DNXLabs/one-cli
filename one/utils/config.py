@@ -31,6 +31,43 @@ def get_config_value(key, default=None):
     return value
 
 
+def get_workspace_value(workspace_name, variable, default=None):
+    value = default
+    if path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE) as file:
+            docs = yaml.load(file, Loader=yaml.BaseLoader)
+            if workspace_name not in docs['workspaces']:
+                if workspace_name is None:
+                    click.echo('Please set workspace before continuing.')
+                else:
+                    click.echo('Workspace %s not found.' % (workspace_name))
+                raise SystemExit
+
+            layer = docs['workspaces'][workspace_name]
+            keys = variable.split('.')
+
+            for key_path in keys:
+                if key_path in layer:
+                    if key_path == keys[-1]:  # Last key
+                        value = layer[key_path]
+                    else:
+                        layer = layer[key_path]
+                else:
+                    break
+
+            if not value:
+                click.echo('Missing required parameter in config: workspaces.%s.%s.' % (workspace_name, variable))
+                raise SystemExit
+
+        file.close()
+
+    return str(value)
+
+
+def get_current_workspace_value(default=None):
+    return os.getenv('WORKSPACE') or 'default'
+
+
 def get_workspaces():
     workspaces = []
     if path.exists(CONFIG_FILE):
@@ -41,33 +78,3 @@ def get_workspaces():
         file.close()
 
     return workspaces
-
-
-def get_workspace_value(workspace_name, variable, default=None):
-    value = default
-    if path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE) as file:
-            docs = yaml.load(file, Loader=yaml.BaseLoader)
-            if workspace_name not in docs['workspaces']:
-                if workspace_name is None:
-                    click.echo('Please set workspace before continuing')
-                else:
-                    click.echo('Workspace %s not found' % (workspace_name))
-                raise SystemExit
-
-            workspace = docs['workspaces'][workspace_name]
-
-            if variable in workspace:
-                value = workspace[variable]
-            elif default is None:
-                click.echo('Missing required parameter in config: workspaces.%s.%s' % (workspace_name, variable))
-                raise SystemExit
-            else:
-                value = default
-        file.close()
-
-    return str(value)
-
-
-def get_current_workspace_value(default=None):
-    return os.getenv('WORKSPACE') or 'default'

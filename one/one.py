@@ -21,6 +21,7 @@ if not path.exists(CLI_ROOT):
 
 load_dotenv(dotenv_path=WORKSPACE_FILE, verbose=True)
 
+
 @click.version_option(__version__)
 @click.group()
 def cli():
