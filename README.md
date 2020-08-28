@@ -111,18 +111,20 @@ workspaces:
   # ECS App example:
   mgmt-ecs-app:
     type: ecs
-    aws-account-id: <redact>
-    aws-role: <redact>
-    aws-assume-role: true|false (default to false)
-    aws-region: ap-southeast-2
+    aws:
+      account-id: <redact>
+      role: <redact>
+      assume-role: true|false (default to false)
+      region: ap-southeast-2
     ecs-cluster-name: cluster-01
 
   # Static App example:
   mgmt-static-app:
-    aws-account-id: <redact>
-    aws-role: <redact>
-    aws-region: ap-southeast-2
-    aws-assume-role: true
+    aws:
+      account-id: <redact>
+      role: <redact>
+      region: ap-southeast-2
+      assume-role: true
     # Override the template static app
     app:
       src: ./build
@@ -131,18 +133,22 @@ workspaces:
 
   # Terraform example
   mgmt:
-    aws-account-id:
-    aws-role:
+    aws:
+      account-id:
+      role:
   nonprod:
-    aws-account-id:
-    aws-role:
+    aws:
+      account-id:
+      role:
   prod:
-    aws-account-id:
-    aws-role:
+    aws:
+      account-id:
+      role:
   default:
-    aws-account-id:
-    aws-role:
-    aws-assume-role: true|false
+    aws:
+      account-id:
+      role:
+      assume-role: true|false
 ```
 
 ## Setup

@@ -15,7 +15,7 @@ class AppDeployEcs(App):
 
     def deploy(self, environment, workspace, image_name):
         env_deploy = {
-            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws-region'),
+            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region'),
             'APP_NAME': get_config_value('app.name'),
             'CLUSTER_NAME': get_workspace_value(workspace, 'ecs-cluster-name'),
             'CONTAINER_PORT': get_config_value('app.port'),
