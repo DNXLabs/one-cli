@@ -13,7 +13,6 @@ TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.12.20-dnx1'
 AWS_IMAGE = 'dnxsolutions/aws:1.18.44-dnx2'
 AWS_V2_IMAGE = 'dnxsolutions/aws:2.0.37-dnx1'
 ECS_DEPLOY_IMAGE = 'dnxsolutions/ecs-deploy:1.2.0'
-CLI_UPDATE_IMAGE = 'dnxsolutions/one-cli-update:latest'
 
 
 class Image:
@@ -27,8 +26,7 @@ class Image:
                   'azure': AZURE_AUTH_IMAGE,
                   'aws': AWS_IMAGE,
                   'aws-v2': AWS_V2_IMAGE,
-                  'ecs-deploy': ECS_DEPLOY_IMAGE,
-                  'cli-update': CLI_UPDATE_IMAGE}
+                  'ecs-deploy': ECS_DEPLOY_IMAGE}
 
         temp_images = {}
         if path.exists(CONFIG_FILE):
