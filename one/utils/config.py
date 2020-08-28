@@ -1,8 +1,11 @@
 import click
 import os
 import yaml
+import re
+from packaging.version import parse
 from os import path
-from one.__init__ import CONFIG_FILE
+from one.__init__ import CONFIG_FILE, __version__
+from one.utils.operators import OPERATORS
 
 
 if not path.exists(CONFIG_FILE):
@@ -10,6 +13,26 @@ if not path.exists(CONFIG_FILE):
         click.style('WARN ', fg='yellow') +
         'No config file in current directory.\n'
     )
+
+
+def required_version_check():
+    versions = get_config_value('required_version', '')
+    if versions:
+        required_versions = re.split(r'[,]\s*', versions)
+        for version in required_versions:
+            try:
+                operator = OPERATORS[version.split(' ', 1)[0]]
+                required_version = parse(version.split(' ')[1])
+                if not operator(parse(__version__), required_version):
+                    click.echo(
+                        click.style('ERROR ', fg='red') +
+                        'Config file requires one-cli version %s and your current version is %s.\n' % (version, __version__))
+                    raise SystemExit
+            except KeyError:
+                click.echo(
+                    click.style('ERROR ', fg='red') +
+                    'Wrong configuration for required_version in one.yaml.\n')
+                raise SystemExit
 
 
 def get_config_value(key, default=None):
