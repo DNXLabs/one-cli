@@ -55,7 +55,7 @@ To use the CLI within any CI/CD pipeline we encourage to use our docker image:
 
 ## Usage
 ```
-Usage: cli.py [OPTIONS] COMMAND [ARGS]...
+Usage: one [OPTIONS] COMMAND [ARGS]...
 
   CLI to manage all stacks from DNX.
 
@@ -65,11 +65,11 @@ Options:
 
 Commands:
   app        Group of app commands wrapped inside docker.
-  auth       Authentication using SSO provider or AWS IAM user.
-  idp        Manage the IDP configuration in your local.
+  auth       Group of auth commands.
+  aws        AWS CLI alias.
+  aws-v2     AWS v2 CLI alias.
   init       Create config file for CLI in current directory.
   terraform  Group of terraform commands wrapped inside docker.
-  update     Update CLI moving to latest stable version.
   workspace  Manage workspaces.
 ```
 
