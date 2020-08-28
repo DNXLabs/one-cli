@@ -18,7 +18,7 @@ if not path.exists(CLI_ROOT):
     os.mkdir(CLI_ROOT)
 
 
-load_dotenv(dotenv_path=WORKSPACE_FILE, verbose=True)
+load_dotenv(dotenv_path=WORKSPACE_FILE)
 
 
 @click.version_option(__version__)
