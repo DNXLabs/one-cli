@@ -17,7 +17,7 @@ class AppDeployStatic(App):
         workspace = environments.get('WORKSPACE', 'default')
 
         env_deploy = {
-            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws-region')
+            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region')
         }
         environments.update(env_deploy)
 
