@@ -7,7 +7,7 @@ from requests.exceptions import ConnectionError
 
 GSUITE_AUTH_IMAGE = 'dnxsolutions/aws-google-auth:latest'
 AZURE_AUTH_IMAGE = 'dnxsolutions/docker-aws-azure-ad:latest'
-TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.12.20-dnx1'
+TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.13.0-dnx1'
 AWS_IMAGE = 'dnxsolutions/aws:1.18.44-dnx2'
 AWS_V2_IMAGE = 'dnxsolutions/aws:2.0.37-dnx1'
 ECS_DEPLOY_IMAGE = 'dnxsolutions/ecs-deploy:1.2.0'
