@@ -1,15 +1,13 @@
 import click
-import yaml
 from one.docker.client import client
 from one.utils.print_progress_bar import print_progress_bar
-from one.__init__ import CONFIG_FILE
-from os import path
+from one.utils.config import get_config_value
 from requests.exceptions import ConnectionError
 
 
 GSUITE_AUTH_IMAGE = 'dnxsolutions/aws-google-auth:latest'
 AZURE_AUTH_IMAGE = 'dnxsolutions/docker-aws-azure-ad:latest'
-TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.12.20-dnx1'
+TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.13.0-dnx1'
 AWS_IMAGE = 'dnxsolutions/aws:1.18.44-dnx2'
 AWS_V2_IMAGE = 'dnxsolutions/aws:2.0.37-dnx1'
 ECS_DEPLOY_IMAGE = 'dnxsolutions/ecs-deploy:1.2.0'
@@ -28,15 +26,10 @@ class Image:
                   'aws-v2': AWS_V2_IMAGE,
                   'ecs-deploy': ECS_DEPLOY_IMAGE}
 
-        temp_images = {}
-        if path.exists(CONFIG_FILE):
-            with open(CONFIG_FILE) as file:
-                docs = yaml.load(file, Loader=yaml.FullLoader)
-                temp_images = docs['images']
-            file.close()
-            for key, value in temp_images.items():
-                if value:
-                    images.update({key: value})
+        for key, value in images.items():
+            images.update({
+                key: get_config_value('images.' + key, value)
+            })
         return images
 
     def get_image(self, key):
