@@ -23,8 +23,8 @@ class Image:
                   'gsuite': GSUITE_AUTH_IMAGE,
                   'azure': AZURE_AUTH_IMAGE,
                   'aws': AWS_IMAGE,
-                  'aws-v2': AWS_V2_IMAGE,
-                  'ecs-deploy': ECS_DEPLOY_IMAGE}
+                  'aws_v2': AWS_V2_IMAGE,
+                  'ecs_deploy': ECS_DEPLOY_IMAGE}
 
         for key, value in images.items():
             images.update({

@@ -9,7 +9,7 @@ image = Image()
 container = Container()
 environment = EnvironmentAws()
 
-ECS_DEPLOY_IMAGE = image.get_image('ecs-deploy')
+ECS_DEPLOY_IMAGE = image.get_image('ecs_deploy')
 AWS_IMAGE = image.get_image('aws')
 
 

@@ -5,7 +5,7 @@ from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.app import App
 
-ECS_DEPLOY_IMAGE = Image().get_image('ecs-deploy')
+ECS_DEPLOY_IMAGE = Image().get_image('ecs_deploy')
 container = Container()
 
 

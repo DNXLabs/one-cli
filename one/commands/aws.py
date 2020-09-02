@@ -8,7 +8,7 @@ container = Container()
 image = Image()
 environment = EnvironmentAws()
 AWS_IMAGE = image.get_image('aws')
-AWS_V2_IMAGE = image.get_image('aws-v2')
+AWS_V2_IMAGE = image.get_image('aws_v2')
 
 
 @click.command(help='AWS CLI alias.')

@@ -82,7 +82,7 @@ def aws():
     if not aws_sso_profile_answer:
         raise SystemExit
 
-    auth_image = image.get_image('aws-v2')
+    auth_image = image.get_image('aws_v2')
     work_volume = CLI_ROOT + ':/work'
     envs = {
         'AWS_CONFIG_FILE': '/work/config',
