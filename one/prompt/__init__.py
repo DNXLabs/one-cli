@@ -10,9 +10,9 @@ class App:
 class AppRegistry:
     def __init__(self):
         self.name = get_config_value('app.name')
-        self.image_name = get_config_value('app.docker.image-name', get_config_value('app.name'))
+        self.image_name = get_config_value('app.docker.image_name', get_config_value('app.name'))
         self.dockerfile = get_config_value('app.docker.file', 'Dockerfile')
-        self.build_cmd_args = get_config_value('app.docker.build-cmd-args', '')
+        self.build_cmd_args = get_config_value('app.docker.build_cmd_args', '')
 
     def get_image_tag(self, build_version):
         return "%s:%s" % (self.image_name, build_version)

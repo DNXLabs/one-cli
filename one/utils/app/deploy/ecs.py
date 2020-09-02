@@ -17,19 +17,19 @@ class AppDeployEcs(App):
         env_deploy = {
             'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region'),
             'APP_NAME': get_config_value('app.name'),
-            'CLUSTER_NAME': get_workspace_value(workspace, 'ecs-cluster-name'),
+            'CLUSTER_NAME': get_workspace_value(workspace, 'ecs_cluster_name'),
             'CONTAINER_PORT': get_config_value('app.port'),
             'IMAGE_NAME': image_name,
         }
 
-        ecs_task_definition_file = get_config_value('app.ecs-task-definition-file', 'task-definition.tpl.json')
+        ecs_task_definition_file = get_config_value('app.ecs_task_definition_file', 'task-definition.tpl.json')
         if not os.path.isfile(ecs_task_definition_file):
             click.echo('ECS task definition file not found (%s)' % ecs_task_definition_file)
             raise SystemExit
 
         envs = environment.get_env()
 
-        timeout = get_workspace_value(workspace, 'deploy-timeout', '0')
+        timeout = get_workspace_value(workspace, 'deploy_timeout', '0')
         if timeout != '0':
             env_deploy['DEPLOY_TIMEOUT'] = timeout
 

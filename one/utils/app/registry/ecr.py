@@ -13,17 +13,17 @@ class AppRegistryEcr(AppRegistry):
     def __init__(self):
         super().__init__()
         self.name = get_config_value('app.name')
-        self.ecr_aws_region = get_config_value('app.docker.registry-options.ecr-aws-region')
-        self.ecr_aws_account_id = get_config_value('app.docker.registry-options.ecr-aws-account-id')
+        self.ecr_aws_region = get_config_value('app.docker.registry_options.ecr_aws_region')
+        self.ecr_aws_account_id = get_config_value('app.docker.registry_options.ecr_aws_account_id')
 
     def get_image_name(self, build_version):
         image_tag = super().get_image_tag(build_version)
         return "%s.dkr.ecr.%s.amazonaws.com/%s" % (self.ecr_aws_account_id, self.ecr_aws_region, image_tag)
 
     def docker_login(self, environment):
-        aws_account_id = get_config_value('app.docker.registry-options.ecr-aws-account-id')
-        aws_role = get_config_value('app.docker.registry-options.ecr-aws-role')
-        aws_assume_role = get_config_value('app.docker.registry-options.ecr-aws-assume-role', 'false').lower()
+        aws_account_id = get_config_value('app.docker.registry_options.ecr_aws_account_id')
+        aws_role = get_config_value('app.docker.registry_options.ecr_aws_role')
+        aws_assume_role = get_config_value('app.docker.registry_options.ecr_aws_assume_role', 'false').lower()
 
         envs = environment.build(
             aws_assume_role=aws_assume_role,

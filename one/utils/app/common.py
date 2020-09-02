@@ -18,5 +18,5 @@ def app_registry_factory(registry_type):
     if registry_type == 'ecr':
         return AppRegistryEcr()
     else:
-        click.echo('Docker registry-type not implemented. Valid values: ecr')
+        click.echo('Docker registry_type not implemented. Valid values: ecr')
         raise SystemExit
