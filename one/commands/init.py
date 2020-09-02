@@ -28,8 +28,8 @@ def init():
             workspace = {
                 'aws': {
                     'role': workspace_answers['AWS_ROLE'],
-                    'account-id': workspace_answers['AWS_ACCOUNT_ID'],
-                    'assume-role': assume_role
+                    'account_id': workspace_answers['AWS_ACCOUNT_ID'],
+                    'assume_role': assume_role
                 }
             }
             workspaces[workspace_answers['WORKSPACE']] = workspace

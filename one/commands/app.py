@@ -21,20 +21,20 @@ def app():
 @app.command(name='docker-build', help='Build docker image for deployment.')
 @click.option('--build-version', default='latest', help='Build version, used as tag for docker image.')
 def docker_build(build_version):
-    app_registry = app_registry_factory(get_config_value('app.docker.registry-type', 'ecr'))
+    app_registry = app_registry_factory(get_config_value('app.docker.registry_type', 'ecr'))
     app_registry.docker_build(build_version)
 
 
 @app.command(name='docker-login', help='Login into docker registry.')
 def docker_login():
-    app_registry = app_registry_factory(get_config_value('app.docker.registry-type', 'ecr'))
+    app_registry = app_registry_factory(get_config_value('app.docker.registry_type', 'ecr'))
     app_registry.docker_login(environment)
 
 
 @app.command(name='docker-push', help='Push image to docker registry.')
 @click.option('--build-version', default='latest', help='Build version, used as tag for docker image.')
 def docker_push(build_version):
-    app_registry = app_registry_factory(get_config_value('app.docker.registry-type', 'ecr'))
+    app_registry = app_registry_factory(get_config_value('app.docker.registry_type', 'ecr'))
     app_registry.docker_push(build_version)
 
 
@@ -43,7 +43,7 @@ def docker_push(build_version):
 @click.option('--build-version', default='latest', help='Build version to deploy (default: latest).')
 def deploy_ecs(workspace, build_version):
     app_deploy = app_deploy_factory(get_workspace_value(workspace, 'type', 'ecs'))
-    app_registry = app_registry_factory(get_config_value('app.docker.registry-type', 'ecr'))
+    app_registry = app_registry_factory(get_config_value('app.docker.registry_type', 'ecr'))
 
     environment.build(workspace)
     image_name = app_registry.get_image_name(build_version)

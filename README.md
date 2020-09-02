@@ -81,12 +81,12 @@ Commands:
 one.yaml
 ```yaml
 images:
-  terraform: dnxsolutions/terraform:0.12.24-dnx1
+  terraform: dnxsolutions/terraform:0.13.0-dnx1
   gsuite: dnxsolutions/aws-google-auth:latest
   azure: dnxsolutions/docker-aws-azure-ad:latest
   aws: dnxsolutions/aws:1.18.44-dnx2
-  aws-2: dnxsolutions/aws:2.0.37-dnx1
-  ecs-deploy: dnxsolutions/ecs-deploy:1.2.0
+  aws_2: dnxsolutions/aws:2.0.37-dnx1
+  ecs_deploy: dnxsolutions/ecs-deploy:1.2.0
 
 required_version: ">= 0.5.0, <= 0.7.0"
 
@@ -96,14 +96,14 @@ app:
   port: 80
   docker:
     file: Dockerfile
-    image-name: copacabana
-    registry-type: ecr
-    registry-options:
-      ecr-aws-account-id: <redact>
-      ecr-aws-region: ap-southeast-2
-      ecr-aws-assume-role: true
-      ecr-aws-role: <redact>
-  ecs-task-definition-file: task-definition.tpl.json
+    image_name: copacabana
+    registry_type: ecr
+    registry_options:
+      ecr_aws_account_id: <redact>
+      ecr_aws_region: ap-southeast-2
+      ecr_aws_assume_role: true
+      ecr_aws_role: <redact>
+  ecs_task_definition_file: task-definition.tpl.json
 
 # Static App
 app:
@@ -115,22 +115,22 @@ app:
 workspaces:
 
   # ECS App example:
-  mgmt-ecs-app:
+  mgmt_ecs_app:
     type: ecs
     aws:
-      account-id: <redact>
+      account_id: <redact>
       role: <redact>
-      assume-role: true|false (default to false)
+      assume_role: true|false (default to false)
       region: ap-southeast-2
-    ecs-cluster-name: cluster-01
+    ecs_cluster_name: cluster-01
 
   # Static App example:
-  mgmt-static-app:
+  mgmt_static_app:
     aws:
-      account-id: <redact>
+      account_id: <redact>
       role: <redact>
       region: ap-southeast-2
-      assume-role: true
+      assume_role: true
     # Override the template static app
     app:
       src: ./build
@@ -140,21 +140,21 @@ workspaces:
   # Terraform example
   mgmt:
     aws:
-      account-id:
-      role:
+      account_id: <redact>
+      role: <redact>
   nonprod:
     aws:
-      account-id:
-      role:
+      account_id: <redact>
+      role: <redact>
   prod:
     aws:
-      account-id:
-      role:
+      account_id: <redact>
+      role: <redact>
   default:
     aws:
-      account-id:
-      role:
-      assume-role: true|false
+      account_id: <redact>
+      role: <redact>
+      assume_role: true|false (default to false)
 ```
 
 ## Plugin System
