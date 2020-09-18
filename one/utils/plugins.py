@@ -7,6 +7,7 @@ from pathlib import Path
 
 home = str(Path.home())
 
+
 def load_plugins(source=home+'/.one/plugins/'):
     if path.exists(source):
         sys.path.append(source)
