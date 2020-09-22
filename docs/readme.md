@@ -1,4 +1,8 @@
 ## Documentation
 
 - [Install](/install)
-- [Config](/config)
+- [Config File](/config)
+- [Development](/development)
+- [Plugins](/plugins)
+- [Contributors](/contributors)
+- [License](/license)
