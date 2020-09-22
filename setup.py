@@ -26,7 +26,8 @@ install_requires = [
     'six==1.14.0',
     'urllib3==1.25.9',
     'wcwidth==0.1.9',
-    'websocket-client==0.57.0'
+    'websocket-client==0.57.0',
+    'packaging==20.4'
 ]
 
 setup(
