@@ -17,8 +17,6 @@ from one.utils.config import required_version_check
 
 if not path.exists(CLI_ROOT):
     os.mkdir(CLI_ROOT)
-elif not path.exists('.one'):
-    os.mkdir('.one')
 
 required_version_check()
 

@@ -47,6 +47,9 @@ def download_plugin(extract_source, url, key):
 
 
 def cleanup_plugins(extract_source, installed_plugins):
+    if not path.exists(extract_source):
+        return
+
     set_difference = set(os.listdir(extract_source)) - set(installed_plugins.keys())
     list_difference = list(set_difference)
     for directory in list_difference:
@@ -106,7 +109,11 @@ def check_plugins(extract_source='.one/plugins/'):
 
 
 def load_plugins(source='.one/plugins/'):
+    if not path.exists('.one'):
+        os.mkdir('.one')
+
     check_plugins()
+
     if path.exists(source):
         sys.path.append('.one')
         for directory in glob.glob(join(source, '*/')):
