@@ -6,4 +6,4 @@ home = str(Path.home())
 
 CLI_ROOT = home + '/.one'
 CONFIG_FILE = './one.yaml'
-WORKSPACE_FILE = './.one.workspace'
+WORKSPACE_FILE = '.one/workspace'
