@@ -10,6 +10,7 @@ AZURE_AUTH_IMAGE = 'dnxsolutions/docker-aws-azure-ad:latest'
 TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.13.0-dnx1'
 AWS_IMAGE = 'dnxsolutions/aws:1.18.44-dnx2'
 AWS_V2_IMAGE = 'dnxsolutions/aws:2.0.37-dnx1'
+SHELL_IMAGE = 'dnxsolutions/shell:latest'
 ECS_DEPLOY_IMAGE = 'dnxsolutions/ecs-deploy:1.2.0'
 
 
@@ -24,6 +25,7 @@ class Image:
                   'azure': AZURE_AUTH_IMAGE,
                   'aws': AWS_IMAGE,
                   'aws_v2': AWS_V2_IMAGE,
+                  'shell': SHELL_IMAGE,
                   'ecs_deploy': ECS_DEPLOY_IMAGE}
 
         for key, value in images.items():

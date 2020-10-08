@@ -9,7 +9,7 @@ class Container:
     def __init__(self):
         pass
 
-    def create(self, image='', command=None, entrypoint=None, volumes=[],
+    def create(self, image='', command=None, entrypoint=None, volumes=[], ports=[],
                working_dir='/work', stdin_open=True, tty=True, environment=''):
 
         Image().check_image(image)
@@ -24,13 +24,21 @@ class Container:
             container_volumes.append(volume_parts[1])
             binds.append(':'.join(volume_parts))
 
-        host_config = client.create_host_config(binds=binds)
+        port_bindings = {}
+        for port in ports:
+            port_bindings[port] = port
+
+        host_config = client.create_host_config(
+            binds=binds,
+            port_bindings=port_bindings
+        )
 
         container = client.create_container(image,
                                             command=command,
                                             entrypoint=entrypoint,
                                             stdin_open=stdin_open,
                                             tty=tty,
+                                            ports=ports,
                                             environment=environment,
                                             working_dir=working_dir,
                                             volumes=container_volumes,

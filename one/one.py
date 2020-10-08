@@ -11,6 +11,7 @@ from one.commands.auth import auth
 from one.commands.terraform import terraform
 from one.commands.workspace import workspace
 from one.commands.aws import aws, aws_v2
+from one.commands.shell import shell
 from one.utils.plugins import load_plugins
 from one.utils.config import required_version_check
 
@@ -30,7 +31,7 @@ def cli():
     pass
 
 
-COMMAND_DIRS = [aws, aws_v2, app, init, auth, terraform, workspace]
+COMMAND_DIRS = [aws, aws_v2, shell, app, init, auth, terraform, workspace]
 
 
 for command in COMMAND_DIRS:
