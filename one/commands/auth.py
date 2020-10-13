@@ -102,9 +102,23 @@ def aws():
 
 
 @auth.command(help='Authentication using AWS IAM user.')
-def iam():
+@click.option('-i', '--access_key_id', default=None, envvar='AWS_ACCESS_KEY_ID', type=str, help='AWS access-key-id.')
+@click.option('-k', '--secret_access_key', default=None, envvar='AWS_SECRET_ACCESS_KEY',
+              type=str, help='AWS secret-access-key.')
+@click.option('-r', '--region', default='us-east-1', envvar='AWS_DEFAULT_REGION', type=str, help='AWS default region.')
+def iam(access_key_id, secret_access_key, region):
+    if access_key_id and secret_access_key:
+        credential = {
+            'AWS_ACCESS_KEY_ID': access_key_id,
+            'AWS_SECRET_ACCESS_KEY': secret_access_key,
+            'AWS_DEFAULT_REGION': region
+        }
+        create_secrets(credential, CLI_ROOT + '/secrets')
+        return
+
     if not check_config_file(['credentials', 'config']):
         configure_iam_user()
+
     aws_iam_profile_answer = prompt(get_iam_profile_questions(), style=style)
 
     if not aws_iam_profile_answer:
@@ -116,7 +130,7 @@ def iam():
     credential = {
         'AWS_ACCESS_KEY_ID': credentials_file[profile]['aws_access_key_id'],
         'AWS_SECRET_ACCESS_KEY': credentials_file[profile]['aws_secret_access_key'],
-        'REGION': config_file['profile ' + profile]['region']
+        'AWS_DEFAULT_REGION': config_file['profile ' + profile]['region']
     }
 
     create_secrets(credential, CLI_ROOT + '/secrets')
