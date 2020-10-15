@@ -1,3 +1,4 @@
+import click
 import dockerpty
 from one.docker.client import client
 from one.docker.image import Image
@@ -25,8 +26,24 @@ class Container:
             binds.append(':'.join(volume_parts))
 
         port_bindings = {}
-        for port in ports:
-            port_bindings[port] = port
+        container_ports = []
+        try:
+            for port in ports:
+                port_parts = port.split(':')
+                port_bindings[port_parts[0]] = port_parts[1]
+                container_ports.append(port_parts[0])
+        except IndexError:
+            click.echo(
+                click.style('ERROR ', fg='red') +
+                'Ports mistyped.\n'
+            )
+            return
+        except Exception:
+            click.echo(
+                click.style('ERROR ', fg='red') +
+                'Unexpected error while loading ports.\n'
+            )
+            raise
 
         host_config = client.create_host_config(
             binds=binds,
@@ -38,7 +55,7 @@ class Container:
                                             entrypoint=entrypoint,
                                             stdin_open=stdin_open,
                                             tty=tty,
-                                            ports=ports,
+                                            ports=container_ports,
                                             environment=environment,
                                             working_dir=working_dir,
                                             volumes=container_volumes,
