@@ -11,7 +11,7 @@ class Container:
         pass
 
     def create(self, image='', command=None, entrypoint=None, volumes=[], ports=[],
-               working_dir='/work', stdin_open=True, tty=True, environment=''):
+               working_dir='/work', stdin_open=True, tty=True, environment={}):
 
         Image().check_image(image)
         host_config = None
