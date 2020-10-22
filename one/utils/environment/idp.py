@@ -5,7 +5,7 @@ from one.utils.prompt import style
 from one.docker.image import Image
 from one.docker.container import Container
 from one.__init__ import CLI_ROOT
-from one.prompt.idp import PROVIDER_QUESTIONS, GSUITE_QUESTIONS, AZURE_QUESTIONS
+from one.prompt.idp import PROVIDER_QUESTIONS, GSUITE_QUESTIONS, AZURE_QUESTIONS, OKTA_QUESTIONS
 from one.prompt.auth import AWS_ACCESS_KEY_QUESTIONS
 
 image = Image()
@@ -21,6 +21,8 @@ def configure_idp():
         configure_gsuite()
     elif provider_answer['provider'] == 'Microsoft Azure SSO':
         configure_azure()
+    elif provider_answer['provider'] == 'Okta SSO':
+        configure_okta()
     elif provider_answer['provider'] == 'AWS SSO':
         configure_aws_sso()
     elif provider_answer['provider'] == 'AWS IAM user':
@@ -52,6 +54,21 @@ def configure_azure():
     idp_file['azure'] = {
         'AZURE_TENANT_ID': answers['AZURE_TENANT_ID'],
         'AZURE_APP_ID_URI': answers['AZURE_APP_ID_URI']
+    }
+
+    write_config(idp_file, '/idp')
+    click.echo('\n')
+
+
+def configure_okta():
+    answers = prompt(OKTA_QUESTIONS, style=style)
+    if not bool(answers):
+        raise SystemExit
+    idp_file = get_idp_file()
+    idp_file['okta'] = {
+        'okta_org': answers['OKTA_ORG'],
+        'okta_aws_app_url': answers['OKTA_AWS_APP_URL'],
+        'okta_aws_default_region': answers['OKTA_AWS_DEFAULT_REGION']
     }
 
     write_config(idp_file, '/idp')

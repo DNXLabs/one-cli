@@ -7,6 +7,7 @@ from requests.exceptions import ConnectionError
 
 GSUITE_AUTH_IMAGE = 'dnxsolutions/aws-google-auth:latest'
 AZURE_AUTH_IMAGE = 'dnxsolutions/docker-aws-azure-ad:latest'
+OKTA_AUTH_IMAGE = 'dnxsolutions/aws-okta-auth:latest'
 TERRAFORM_IMAGE = 'dnxsolutions/terraform:0.13.0-dnx1'
 AWS_IMAGE = 'dnxsolutions/aws:1.18.44-dnx2'
 AWS_V2_IMAGE = 'dnxsolutions/aws:2.0.37-dnx1'
@@ -23,6 +24,7 @@ class Image:
         images = {'terraform': TERRAFORM_IMAGE,
                   'gsuite': GSUITE_AUTH_IMAGE,
                   'azure': AZURE_AUTH_IMAGE,
+                  'okta': OKTA_AUTH_IMAGE,
                   'aws': AWS_IMAGE,
                   'aws_v2': AWS_V2_IMAGE,
                   'shell': SHELL_IMAGE,

@@ -10,7 +10,7 @@ from one.utils.prompt import style
 from one.prompt.auth import get_sso_profile_questions, get_iam_profile_questions
 from one.__init__ import CLI_ROOT
 from one.utils.environment.common import create_secrets, get_credentials_file, get_config_file, get_idp_file
-from one.utils.environment.idp import configure_idp, configure_gsuite, configure_azure, configure_aws_sso, configure_iam_user
+from one.utils.environment.idp import configure_idp, configure_gsuite, configure_azure, configure_okta, configure_aws_sso, configure_iam_user
 
 container = Container()
 image = Image()
@@ -63,6 +63,29 @@ def azure():
     envs = {
         'AZURE_TENANT_ID': idp_file['azure']['azure_tenant_id'],
         'AZURE_APP_ID_URI': idp_file['azure']['azure_app_id_uri']
+    }
+
+    container.create(
+        image=auth_image,
+        volumes=[credentials_volume],
+        environment=envs
+    )
+
+    shutil.move(CLI_ROOT + '/.env', CLI_ROOT + '/secrets')
+
+
+@auth.command(help='Authentication using Okta SSO provider.')
+def okta(auth_image=None):
+    if not check_config_file(['idp']):
+        configure_okta()
+    auth_image = image.get_image('okta')
+    credentials_volume = CLI_ROOT + ':/work'
+
+    idp_file = get_idp_file()
+    envs = {
+        'OKTA_ORG': idp_file['okta']['okta_org'],
+        'OKTA_AWS_APP_URL': idp_file['okta']['okta_aws_app_url'],
+        'OKTA_AWS_DEFAULT_REGION': idp_file['okta']['okta_aws_default_region']
     }
 
     container.create(
