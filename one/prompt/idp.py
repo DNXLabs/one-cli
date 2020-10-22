@@ -1,4 +1,10 @@
-prompt_providers = ['Google G Suite SSO', 'Microsoft Azure SSO', 'Okta SSO', 'AWS SSO', 'AWS IAM user']
+prompt_providers = [
+    'Google G Suite SSO',
+    'Microsoft Azure SSO',
+    'Okta SSO',
+    'AWS SSO',
+    'AWS IAM user'
+]
 
 PROVIDER_QUESTIONS = [
     {

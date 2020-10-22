@@ -10,7 +10,13 @@ from one.utils.prompt import style
 from one.prompt.auth import get_sso_profile_questions, get_iam_profile_questions
 from one.__init__ import CLI_ROOT
 from one.utils.environment.common import create_secrets, get_credentials_file, get_config_file, get_idp_file
-from one.utils.environment.idp import configure_idp, configure_gsuite, configure_azure, configure_okta, configure_aws_sso, configure_iam_user
+from one.utils.environment.idp import (configure_idp,
+                                       configure_gsuite,
+                                       configure_azure,
+                                       configure_okta,
+                                       configure_aws_sso,
+                                       configure_iam_user)
+
 
 container = Container()
 image = Image()
