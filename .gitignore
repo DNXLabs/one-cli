@@ -9,3 +9,5 @@ one/__main__.pyc
 one/one.pyc
 env
 one_cli.egg-info
+.one
+one.yaml
