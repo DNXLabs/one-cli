@@ -75,7 +75,7 @@ def azure():
 
 
 @auth.command(help='Authentication using Okta SSO provider.')
-def okta(auth_image=None):
+def okta():
     if not check_config_file(['idp']):
         configure_okta()
     auth_image = image.get_image('okta')
