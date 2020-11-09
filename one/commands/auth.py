@@ -63,7 +63,10 @@ def azure():
     if not check_config_file(['idp']):
         configure_azure()
     auth_image = image.get_image('azure')
-    credentials_volume = CLI_ROOT + ':/work'
+
+    with open(CLI_ROOT + '/.env', 'w') as file:
+        file.write('NONE=')
+        file.close()
 
     idp_file = get_idp_file()
     envs = {
@@ -71,6 +74,7 @@ def azure():
         'AZURE_APP_ID_URI': idp_file['azure']['azure_app_id_uri']
     }
 
+    credentials_volume = CLI_ROOT + '/.env:/work/.env'
     container.create(
         image=auth_image,
         volumes=[credentials_volume],
