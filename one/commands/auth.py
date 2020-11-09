@@ -42,11 +42,26 @@ def gsuite(auth_image=None):
         file.write('NONE=')
         file.close()
 
-    idp_file = get_idp_file()
-    envs = {
-        'GOOGLE_IDP_ID': idp_file['gsuite']['google_idp_id'],
-        'GOOGLE_SP_ID': idp_file['gsuite']['google_sp_id']
-    }
+    envs = {}
+    while True:
+        try:
+            idp_file = get_idp_file()
+            envs = {
+                'GOOGLE_IDP_ID': idp_file['gsuite']['google_idp_id'],
+                'GOOGLE_SP_ID': idp_file['gsuite']['google_sp_id']
+            }
+        except KeyError:
+            click.echo('\nYou do not have any GSuite IDP configured, starting configuration.\n')
+            configure_gsuite()
+        except Exception:
+            click.echo(
+                click.style('ERROR ', fg='red') +
+                'Unexpected error.\n'
+            )
+            raise
+
+        if not envs == {}:
+            break
 
     credentials_volume = CLI_ROOT + ':/work'
     container.create(
@@ -68,11 +83,26 @@ def azure():
         file.write('NONE=')
         file.close()
 
-    idp_file = get_idp_file()
-    envs = {
-        'AZURE_TENANT_ID': idp_file['azure']['azure_tenant_id'],
-        'AZURE_APP_ID_URI': idp_file['azure']['azure_app_id_uri']
-    }
+    envs = {}
+    while True:
+        idp_file = get_idp_file()
+        try:
+            envs = {
+                'AZURE_TENANT_ID': idp_file['azure']['azure_tenant_id'],
+                'AZURE_APP_ID_URI': idp_file['azure']['azure_app_id_uri']
+            }
+        except KeyError:
+            click.echo('\nYou do not have any Azure IDP configured, starting configuration.\n')
+            configure_azure()
+        except Exception:
+            click.echo(
+                click.style('ERROR ', fg='red') +
+                'Unexpected error.\n'
+            )
+            raise
+
+        if not envs == {}:
+            break
 
     credentials_volume = CLI_ROOT + '/.env:/work/.env'
     container.create(
