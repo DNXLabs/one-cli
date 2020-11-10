@@ -27,17 +27,19 @@ def terraform_modules_check():
 
             split = re.split(r'[./]\s*', module['Source'])
             if len(split) >= 5 and split[4] == 'DNXLabs':
-                name = re.split(r'[./]\s*', module['Source'])[5]
-                version = module['Source'].split('=')[1]
-                key = module['Key']
-                api_version = ''
                 try:
+                    name = re.split(r'[./]\s*', module['Source'])[5]
+                    version = module['Source'].split('=')[1]
+                    key = module['Key']
+                    api_version = ''
                     api_version = api['modules'][name]['tag_name']
-                except KeyError:
+                except (KeyError, IndexError):
                     click.echo(
                         click.style('ERROR ', fg='red') +
                         'Could not find module ' + name + ' at DNX modules API.'
                     )
+                    continue
+
                 if api_version != version:
                     click.echo(
                         '- ' + name + '/' + key + ': ' +
