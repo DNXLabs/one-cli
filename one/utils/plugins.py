@@ -21,6 +21,9 @@ PLUGIN_DATA_FILE = '.one/plugins.json'
 
 
 def download_plugin(extract_source, url, key):
+    if not path.exists('.one'):
+        os.mkdir('.one')
+
     file_stream = urllib.request.urlopen(url)
 
     if url.endswith('tar.gz'):
@@ -103,15 +106,24 @@ def check_plugins(extract_source='.one/plugins/'):
             'Unexpected error.\n'
         )
         raise
-    with open(PLUGIN_DATA_FILE, 'w') as outfile:
-        json.dump(installed_plugins, outfile)
+
+    update_file_and_folder(installed_plugins, extract_source)
     cleanup_plugins(extract_source, installed_plugins)
 
 
-def load_plugins(source='.one/plugins/'):
-    if not path.exists('.one'):
-        os.mkdir('.one')
+def update_file_and_folder(installed_plugins={}, extract_source=None):
+    if installed_plugins == {}:
+        try:
+            os.remove(PLUGIN_DATA_FILE)
+            shutil.rmtree(extract_source)
+        except Exception:
+            pass
+    else:
+        with open(PLUGIN_DATA_FILE, 'w') as outfile:
+            json.dump(installed_plugins, outfile)
 
+
+def load_plugins(source='.one/plugins/'):
     check_plugins()
 
     if path.exists(source):
