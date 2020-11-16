@@ -3,6 +3,7 @@ from one.docker.container import Container
 from one.docker.image import Image
 from one.utils.environment.aws import EnvironmentAws
 from one.utils.terraform_modules import terraform_modules_check
+from one.utils.config import get_config_value, str2bool
 
 image = Image()
 container = Container()
@@ -18,7 +19,8 @@ def terraform():
 @terraform.command(help='Run terraform init inside the docker container.')
 @click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
 @click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
-def init(workspace, aws_role):
+@click.option('-c', '--check-modules', 'check_modules', default=True, type=bool, help='DNX modules version check.')
+def init(workspace, aws_role, check_modules):
     envs = environment.build(workspace, aws_role).get_env()
 
     container.create(
@@ -44,7 +46,12 @@ def init(workspace, aws_role):
         environment=envs
     )
 
-    terraform_modules_check()
+    check_modules = str2bool(
+            get_config_value('config.check_modules', str(check_modules))
+        )
+
+    if check_modules:
+        terraform_modules_check()
 
 
 @terraform.command(help='Run terraform plan inside the docker container.')

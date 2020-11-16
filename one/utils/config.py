@@ -101,3 +101,7 @@ def get_workspaces():
         file.close()
 
     return workspaces
+
+
+def str2bool(string):
+    return string.lower() in ("yes", "true", "t", "1")
