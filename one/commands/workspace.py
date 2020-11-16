@@ -1,4 +1,6 @@
 import click
+import os
+from os import path
 from one.utils.prompt import style
 from PyInquirer import prompt
 from one.utils.config import get_workspaces, get_current_workspace_value
@@ -51,9 +53,12 @@ def change(workspace: str):
             raise SystemExit
         workspace = answers.get('workspace', 'default')
 
-    f = open(WORKSPACE_FILE, 'w')
-    f.write('WORKSPACE=' + workspace + '\n')
-    f.close()
+    if not path.exists('.one'):
+        os.mkdir('.one')
+
+    with open(WORKSPACE_FILE, 'w') as file:
+        file.write('WORKSPACE=' + workspace + '\n')
+        file.close()
 
 
 @workspace.command(name='show', help='Show current workspace.')
