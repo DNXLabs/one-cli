@@ -15,12 +15,17 @@ class AppDeployEcs(App):
 
     def deploy(self, environment, workspace, image_name):
         env_deploy = {
-            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region'),
+            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region', '', True),
             'APP_NAME': get_config_value('app.name'),
-            'CLUSTER_NAME': get_workspace_value(workspace, 'ecs_cluster_name'),
+            'CLUSTER_NAME': get_workspace_value(workspace, 'ecs_cluster_name', '', True),
             'CONTAINER_PORT': get_config_value('app.port'),
             'IMAGE_NAME': image_name,
         }
+
+        workspace_environments = get_workspace_value(workspace, 'environment', [])
+
+        for env_dict in workspace_environments:
+            env_deploy = {**env_deploy, **env_dict}
 
         ecs_task_definition_file = get_config_value('app.ecs_task_definition_file', 'task-definition.tpl.json')
         if not os.path.isfile(ecs_task_definition_file):

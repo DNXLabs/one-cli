@@ -42,7 +42,7 @@ def docker_push(build_version):
 @click.option('-w', '--workspace', required=True, help='Workspace to deploy.')
 @click.option('--build-version', default='latest', help='Build version to deploy (default: latest).')
 def deploy_ecs(workspace, build_version):
-    app_deploy = app_deploy_factory(get_workspace_value(workspace, 'type', 'ecs'))
+    app_deploy = app_deploy_factory(get_workspace_value(workspace, 'type', 'ecs', True))
     app_registry = app_registry_factory(get_config_value('app.docker.registry_type', 'ecr'))
 
     environment.build(workspace)

@@ -54,7 +54,7 @@ def get_config_value(key, default=None):
     return value
 
 
-def get_workspace_value(workspace_name, variable, default=None):
+def get_workspace_value(workspace_name, variable, default=None, required=False):
     value = default
     if path.exists(CONFIG_FILE):
         with open(CONFIG_FILE) as file:
@@ -77,14 +77,13 @@ def get_workspace_value(workspace_name, variable, default=None):
                         layer = layer[key_path]
                 else:
                     break
-
-            if not value:
+            if not value and required:
                 click.echo('Missing required parameter in config: workspaces.%s.%s.' % (workspace_name, variable))
                 raise SystemExit
 
         file.close()
 
-    return str(value)
+    return value
 
 
 def get_current_workspace_value(default=None):
