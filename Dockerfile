@@ -3,6 +3,7 @@ FROM python:3.9-buster
 RUN apt-get update && apt-get install -y \
     docker.io \
     docker-compose \
+    pass \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/one
