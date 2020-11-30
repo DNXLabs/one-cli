@@ -27,8 +27,8 @@ class EnvironmentAws(Environment):
         self.workspace = workspace or getenv('WORKSPACE') or 'default'
         click.echo('Setting workspace to %s' % (self.workspace))
 
-        aws_account_id = aws_account_id or get_workspace_value(self.workspace, 'aws.account_id')
-        aws_role = aws_role or get_workspace_value(self.workspace, 'aws.role')
+        aws_account_id = aws_account_id or get_workspace_value(self.workspace, 'aws.account_id', '', True)
+        aws_role = aws_role or get_workspace_value(self.workspace, 'aws.role', '', True)
         aws_assume_role = aws_assume_role or get_workspace_value(self.workspace, 'aws.assume_role', 'false')
 
         self.env_workspace = {

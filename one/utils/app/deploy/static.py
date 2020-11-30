@@ -17,13 +17,22 @@ class AppDeployStatic(App):
         workspace = environments.get('WORKSPACE', 'default')
 
         env_deploy = {
-            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region')
+            'AWS_DEFAULT_REGION': get_workspace_value(workspace, 'aws.region', '', True)
         }
         environments.update(env_deploy)
 
-        s3_bucket_name = get_config_value('app.s3_bucket', '') or get_workspace_value(workspace, 'app.s3_bucket')
-        distribution_id = get_config_value('app.distribution_id', '') or get_workspace_value(workspace, 'app.distribution_id')
-        src_dir = get_config_value('app.src', '') or get_workspace_value(workspace, 'app.src')
+        s3_bucket_name = (
+            get_config_value('app.s3_bucket', '') or
+            get_workspace_value(workspace, 'app.s3_bucket', '', True)
+        )
+        distribution_id = (
+            get_config_value('app.distribution_id', '') or
+            get_workspace_value(workspace, 'app.distribution_id', '', True)
+        )
+        src_dir = (
+            get_config_value('app.src', '') or
+            get_workspace_value(workspace, 'app.src', '', True)
+        )
 
         if not os.path.isdir(src_dir):
             click.echo('Source folder not found (%s)' % src_dir)
