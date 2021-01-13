@@ -1,6 +1,6 @@
 from pathlib import Path
 
-__version__ = '0.6.12'
+__version__ = '0.6.13'
 
 home = str(Path.home())
 
