@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 install_requires = [
     'altgraph==0.17',
     'certifi==2020.4.5.1',
-    'chardet==3.0.4',
+    'chardet==4.0.0',
     'click==7.1.2',
     'docker-py==1.10.6',
     'docker-pycreds==0.4.0',
@@ -22,7 +22,7 @@ install_requires = [
     'python-dotenv==0.13.0',
     'PyYAML==5.3.1',
     'regex==2020.5.7',
-    'requests==2.23.0',
+    'requests==2.25.1',
     'six==1.14.0',
     'urllib3==1.25.9',
     'wcwidth==0.1.9',
