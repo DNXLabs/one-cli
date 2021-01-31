@@ -39,8 +39,8 @@ def load_plugins():
         with open(CONFIG_FILE) as file:
             docs = yaml.load(file, Loader=yaml.BaseLoader)
             for key, value in docs['plugins'].items():
-                package = get_config_value('plugins.'+ key +'.package')
-                module = get_config_value('plugins.'+ key +'.module')
+                package = get_config_value('plugins.' + key + '.package')
+                module = get_config_value('plugins.' + key + '.module')
 
                 if package not in installed_packages:
                     click.echo('Installing plugin %s.' % package)
