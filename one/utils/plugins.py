@@ -4,6 +4,7 @@ import subprocess
 import click
 import yaml
 import importlib.util
+from one.utils.config import get_config_value
 from one.__init__ import CONFIG_FILE
 
 
@@ -37,9 +38,9 @@ def load_plugins():
     try:
         with open(CONFIG_FILE) as file:
             docs = yaml.load(file, Loader=yaml.BaseLoader)
-            for plugin in docs['plugins']:
-                package = plugin.get('package')
-                module = plugin.get('module')
+            for key, value in docs['plugins'].items():
+                package = get_config_value('plugins.'+ key +'.package')
+                module = get_config_value('plugins.'+ key +'.module')
 
                 if package not in installed_packages:
                     click.echo('Installing plugin %s.' % package)
