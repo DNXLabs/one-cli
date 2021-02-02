@@ -28,7 +28,7 @@ def terraform_modules_check():
             split = re.split(r'[./]\s*', module['Source'])
             if len(split) >= 5 and split[4] == 'DNXLabs':
                 try:
-                    name = re.split(r'[./]\s*', module['Source'])[5]
+                    name = re.split(r'[./?]\s*', module['Source'])[5]
                     version = module['Source'].split('=')[1]
                     key = module['Key']
                     api_version = ''
