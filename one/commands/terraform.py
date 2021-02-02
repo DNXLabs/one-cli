@@ -118,3 +118,16 @@ def force_unlock(lock_id):
         volumes=['.:/work'],
         environment=envs
     )
+
+
+@terraform.command(help='Run terraform output inside the docker container.')
+@click.option('-w', '--workspace', default=None, type=str, help='Workspace to use.')
+@click.option('-r', '--aws-role', 'aws_role', default=None, type=str, help='AWS role to use.')
+def output(workspace, aws_role):
+    envs = environment.build(workspace, aws_role).get_env()
+    container.create(
+        image=TERRAFORM_IMAGE,
+        command='output -json',
+        volumes=['.:/work'],
+        environment=envs
+    )
