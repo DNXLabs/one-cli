@@ -24,7 +24,7 @@ install_requires = [
     'regex==2020.5.7',
     'requests==2.25.1',
     'six==1.14.0',
-    'urllib3==1.25.9',
+    'urllib3==1.26.5',
     'wcwidth==0.1.9',
     'websocket-client==0.57.0',
     'packaging==20.4'
