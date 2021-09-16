@@ -16,7 +16,7 @@ install_requires = [
     'dockerpty==0.4.1',
     'idna==2.9',
     'prompt-toolkit==1.0.14',
-    'Pygments==2.6.1',
+    'Pygments==2.7.4',
     'PyInquirer==1.0.3',
     'PyInstaller==3.6',
     'python-dotenv==0.13.0',
