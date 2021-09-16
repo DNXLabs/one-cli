@@ -20,7 +20,7 @@ install_requires = [
     'PyInquirer==1.0.3',
     'PyInstaller==3.6',
     'python-dotenv==0.13.0',
-    'PyYAML==5.3.1',
+    'PyYAML==5.4',
     'regex==2020.5.7',
     'requests==2.25.1',
     'six==1.14.0',
