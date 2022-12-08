@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 install_requires = [
     'altgraph==0.17',
-    'certifi==2020.4.5.1',
+    'certifi==2022.12.7',
     'chardet==4.0.0',
     'click==7.1.2',
     'docker-py==1.10.6',
